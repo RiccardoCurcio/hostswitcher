@@ -1,6 +1,8 @@
 """Command."""
 from src.logger.logger import logger
 from src.notification.notification import notification
+from src.commad.action.init_action import init_action
+from src.commad.action.create_action import create_action
 
 
 log = logger()
@@ -12,11 +14,12 @@ Usage: main.py [OPTIONS]
   Host-switcher
 
 Options:
-  --init           set current host file default host file
-  --create         create new host file by current host file
-  --edit           edit host file
-  --set            set host file
-  --list           list of host files
+  --init           set current hosts file default hosts file
+  --create         create new hosts file by current hosts file
+  --createby      create new hosts file by default file
+  --edit           edit hosts file
+  --set            set hosts file
+  --list           list of hosts files
   --help           Show this message and exit.
 """
 
@@ -35,16 +38,33 @@ def command(func):
 
 
 class function:
+
     def help():
         print(description)
 
     def init():
-        notification.send("Init default hosts file")
-        print('init')
+        init_a = init_action()
+        init_r = init_a.copy_current_host_file()
+        if init_r is True:
+            notification.send("Init default hosts file")
+            print('* Copy current hosts file [ok]')
+        else:
+            notification.send("ERROR Init default hosts file")
+            print('* Copy current hosts file [FAIL]')
 
     def create():
-        notification.send("Create new host file")
-        print('create')
+        create_a = create_action()
+        create_r = create_a.create_new_file_by_current()
+        if create_r is True:
+            notification.send("Create new hosts file")
+            print('* Create new hosts file [ok]')
+        else:
+            notification.send("ERROR create new hosts file")
+            print('* Create new hosts file [FAIL]')
+
+    def createby():
+        notification.send("Create new hosts file by exists hosts file")
+        print('createnew')
 
     def edit():
         notification.send("edit host file")
