@@ -11,7 +11,6 @@ class app(logger):
         self.log_info(app_name)
         self.boot = bootstrap()
         self.boot.start_dep()
-        # self.command = command()
         pass
 
     @command
