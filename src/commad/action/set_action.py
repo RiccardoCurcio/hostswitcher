@@ -16,7 +16,6 @@ class set_action(logger):
         try:
             file_selcted = self.__select_origin()
             file_path = self.path_hosts_custom + file_selcted
-            # os.system("vim " + file_path)
             os.system("sudo cp " + file_path + " " + self.path_hosts)
             return True
         except Exception as e:

@@ -36,7 +36,6 @@ def command(func):
             func = getattr(function, arg[1][2:])
             func()
         except Exception as e:
-            print('\033[1mOPTION not valid\033[0;0m')
             log.log_warning(e)
             function.help()
     return getArgs
