@@ -32,6 +32,8 @@ class create_action(logger):
                     hosts,
                     new_name
                 )
+
+                self.__set_title(new_name, name)
                 return True
 
             return False
@@ -46,6 +48,27 @@ class create_action(logger):
     def __insert_name(self):
         name = input("Please insert new hosts file name: ")
         return name
+
+    def __set_title(self, file_path, name):
+        my_file_r = open(
+            file_path,
+            'r'
+        )
+        copy_list = list()
+        for line in my_file_r:
+            copy_list.append(line)
+        my_file_r.close()
+
+        my_file_w = open(
+            file_path,
+            'w'
+        )
+        my_file_w.seek(0)
+        my_file_w.write('#' + name.upper() + '\n')
+        for line in copy_list:
+            my_file_w.write(line)
+
+        my_file_w.close()
 
     def create_new_file_by_current(self):
         try:

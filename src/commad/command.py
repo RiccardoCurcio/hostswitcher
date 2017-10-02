@@ -17,7 +17,7 @@ Usage: main.py [OPTIONS]
 Options:
   --init           set current hosts file default hosts file
   --create         create new hosts file by current hosts file
-  --createby      create new hosts file by default file
+  --createby       create new hosts file by default file
   --edit           edit hosts file
   --set            set hosts file
   --list           list of hosts files
@@ -78,5 +78,6 @@ class function:
     def list():
         list_a = list_action()
         lof = list_a.list_of_file()
+        lof = list_a.in_use(lof)
         for file_name in lof:
             print(file_name)
