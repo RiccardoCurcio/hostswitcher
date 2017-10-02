@@ -1,4 +1,5 @@
 import os
+from src.commad.action.init_action import init_action
 
 text = """
 ╦ ╦╔═╗╔═╗╔╦╗  ╔═╗╦ ╦╦╔╦╗╔═╗╦ ╦╔═╗╦═╗
@@ -24,3 +25,5 @@ class bootstrap():
         directory = self.path_hosts_custom
         if not os.path.exists(directory):
             os.makedirs(directory)
+            init_a = init_action()
+            init_a.copy_current_host_file()
