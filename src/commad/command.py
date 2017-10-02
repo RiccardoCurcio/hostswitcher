@@ -4,6 +4,8 @@ from src.notification.notification import notification
 from src.commad.action.init_action import init_action
 from src.commad.action.create_action import create_action
 from src.commad.action.list_action import list_action
+from src.commad.action.edit_action import edit_action
+from src.commad.action.set_action import set_action
 
 
 log = logger()
@@ -48,32 +50,38 @@ class function:
         init_r = init_a.copy_current_host_file()
         if init_r is True:
             notification.send("Init default hosts file")
-            print('* Copy current hosts file [ok]')
+            print('* Copy current hosts file')
         else:
-            # notification.send("ERROR Init default hosts file")
-            print('* Copy current hosts file [No]')
+            print('* No copy current hosts file')
 
     def create():
         create_a = create_action()
         create_r = create_a.create_new_file_by_current()
         if create_r is True:
             notification.send("Create new hosts file")
-            print('* Create new hosts file [ok]')
+            print('* Create new hosts file')
         else:
             # notification.send("ERROR create new hosts file")
-            print('* Create new hosts file [No]')
+            print('* No create new hosts file')
 
     def createby():
+        create_a = create_action()
+        create_a.create_new_file_by_select()
         notification.send("Create new hosts file by exists hosts file")
-        print('createnew')
 
     def edit():
-        notification.send("edit host file")
-        print('edit')
+        edit_a = edit_action()
+        edit_a.edit_file()
+        print('Edit complete')
 
     def set():
-        notification.send("Set host file")
-        print('set')
+        set_a = set_action()
+        set_r = set_a.set_file()
+        if set_r is True:
+            notification.send("Set new hosts file")
+            print('* Set new hosts file')
+        else:
+            print('* No set hosts file')
 
     def list():
         list_a = list_action()

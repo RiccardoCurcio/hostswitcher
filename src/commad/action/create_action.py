@@ -2,6 +2,7 @@
 import os
 import shutil
 from src.logger.logger import logger
+from src.commad.action.list_action import list_action
 
 
 class create_action(logger):
@@ -12,8 +13,11 @@ class create_action(logger):
         self.path_hosts = '/etc/hosts'
         self.file_name = 'hosts'
 
-    def __copy_current_hosts(self, name):
-        hosts = self.path_hosts
+    def __copy_current_hosts(self, name, origin=None):
+        if origin is None:
+            hosts = self.path_hosts
+        else:
+            hosts = self.path_hosts_custom + origin
         new_name = self.path_hosts_custom + name
         try:
             if os.path.exists(new_name) is True:
@@ -42,9 +46,6 @@ class create_action(logger):
             return False
         return True
 
-    def __copy_by_hosts(self):
-        return True
-
     def __insert_name(self):
         name = input("Please insert new hosts file name: ")
         return name
@@ -70,11 +71,11 @@ class create_action(logger):
 
         my_file_w.close()
 
-    def create_new_file_by_current(self):
+    def create_new_file_by_current(self, origin=None):
         try:
             name = self.__insert_name()
             name = self.file_name + '.' + name
-            copy_result = self.__copy_current_hosts(name)
+            copy_result = self.__copy_current_hosts(name, origin)
             if copy_result is False:
                 return False
             file_path = self.path_hosts_custom + name
@@ -83,3 +84,18 @@ class create_action(logger):
         except Exception as e:
             self.log_warning(e)
             return False
+
+    def __select_origin(self):
+        list_a = list_action()
+        lof = list_a.list_of_file()
+        count = 0
+        for file_name in lof:
+            print(str(count) + ' - ' + file_name)
+            count = count+1
+        question = 'select origin file:'
+        resp = input(question)
+        return lof[int(resp)]
+
+    def create_new_file_by_select(self):
+        file_selected = self.__select_origin()
+        self.create_new_file_by_current(file_selected)
