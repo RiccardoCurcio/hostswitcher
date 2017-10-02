@@ -3,6 +3,7 @@ from src.logger.logger import logger
 from src.notification.notification import notification
 from src.commad.action.init_action import init_action
 from src.commad.action.create_action import create_action
+from src.commad.action.list_action import list_action
 
 
 log = logger()
@@ -49,8 +50,8 @@ class function:
             notification.send("Init default hosts file")
             print('* Copy current hosts file [ok]')
         else:
-            notification.send("ERROR Init default hosts file")
-            print('* Copy current hosts file [FAIL]')
+            # notification.send("ERROR Init default hosts file")
+            print('* Copy current hosts file [N]')
 
     def create():
         create_a = create_action()
@@ -59,8 +60,8 @@ class function:
             notification.send("Create new hosts file")
             print('* Create new hosts file [ok]')
         else:
-            notification.send("ERROR create new hosts file")
-            print('* Create new hosts file [FAIL]')
+            # notification.send("ERROR create new hosts file")
+            print('* Create new hosts file [No]')
 
     def createby():
         notification.send("Create new hosts file by exists hosts file")
@@ -75,4 +76,7 @@ class function:
         print('set')
 
     def list():
-        print('list')
+        list_a = list_action()
+        lof = list_a.list_of_file()
+        for file_name in lof:
+            print(file_name)

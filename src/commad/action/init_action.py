@@ -15,13 +15,19 @@ class init_action(logger):
     def copy_current_host_file(self):
         try:
             hosts = self.path_hosts
-            name = self.path_hosts_custom + self.file_name
-            # print(open(hosts, 'r').read().find('#NO-ENV'))
-            shutil.copyfile(
-                hosts,
-                name
-            )
-            return True
+            default = self.file_name
+            name = self.path_hosts_custom + default
+            if os.path.exists(name) is True:
+                msg = default + ' exists, do you want overwrite it? (yes/no) '
+                resp = input(msg)
+                if resp == 'yes':
+                    # print(open(hosts, 'r').read().find('#NO-ENV'))
+                    shutil.copyfile(
+                        hosts,
+                        name
+                    )
+                    return True
+            return False
         except Exception as e:
             self.log_warning(e)
             return False

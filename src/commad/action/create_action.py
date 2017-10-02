@@ -25,13 +25,22 @@ class create_action(logger):
                         new_name
                     )
                     return True
-                return False
+                else:
+                    return False
+            else:
+                shutil.copyfile(
+                    hosts,
+                    new_name
+                )
+                return True
+
+            return False
         except Exception as e:
             self.log_warning(e)
             return False
         return True
 
-    def __copy_default_hosts(self):
+    def __copy_by_hosts(self):
         return True
 
     def __insert_name(self):
