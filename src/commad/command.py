@@ -61,7 +61,6 @@ class function:
             notification.send("Create new hosts file")
             print('* Create new hosts file')
         else:
-            # notification.send("ERROR create new hosts file")
             print('* No create new hosts file')
 
     def createby():

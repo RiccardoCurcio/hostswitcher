@@ -25,7 +25,8 @@ class list_action(logger):
         for compare in lof:
             f1 = self.path_hosts_custom + compare
             if filecmp.cmp(f1, self.path_hosts, shallow=1) is True:
-                return_list.append(str('* ' + compare))
+
+                return_list.append(str(' \033[1m' + compare + '\033[0;0m'))
             else:
-                return_list.append(str('  ' + compare))
+                return_list.append(str(' '+compare))
         return return_list

@@ -2,7 +2,7 @@
 import os
 import shutil
 from src.logger.logger import logger
-from src.commad.action.list_action import list_action
+from src.commad.action.origin_action import origin_action
 
 
 class create_action(logger):
@@ -28,6 +28,7 @@ class create_action(logger):
                         hosts,
                         new_name
                     )
+                    self.__set_title(new_name, name)
                     return True
                 else:
                     return False
@@ -86,15 +87,8 @@ class create_action(logger):
             return False
 
     def __select_origin(self):
-        list_a = list_action()
-        lof = list_a.list_of_file()
-        count = 0
-        for file_name in lof:
-            print(str(count) + ' - ' + file_name)
-            count = count+1
-        question = 'select origin file:'
-        resp = input(question)
-        return lof[int(resp)]
+        origin_a = origin_action()
+        return origin_a.select_origin()
 
     def create_new_file_by_select(self):
         file_selected = self.__select_origin()
