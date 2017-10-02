@@ -1,1 +1,1 @@
-# hostswitcher
+# Host-switcher

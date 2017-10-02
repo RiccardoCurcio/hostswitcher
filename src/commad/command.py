@@ -1,6 +1,5 @@
 """Command."""
 from src.logger.logger import logger
-from src.notification.notification import notification
 from src.commad.action.init_action import init_action
 from src.commad.action.create_action import create_action
 from src.commad.action.list_action import list_action
@@ -10,7 +9,6 @@ from src.commad.action.remove_action import remove_action
 
 
 log = logger()
-notification = notification()
 
 description = """
 Usage: main.py [OPTIONS]
@@ -20,7 +18,7 @@ Usage: main.py [OPTIONS]
 Options:
   --init           set current hosts file default hosts file
   --create         create new hosts file by current hosts file
-  --createby       create new hosts file by default file
+  --createby       create new hosts file from selected file
   --edit           edit hosts file
   --set            set hosts file
   --list           list of hosts files
@@ -50,7 +48,6 @@ class function:
         init_a = init_action()
         init_r = init_a.copy_current_host_file()
         if init_r is True:
-            notification.send("Init default hosts file")
             print('* Copy current hosts file')
         else:
             print('* No copy current hosts file')
@@ -59,15 +56,17 @@ class function:
         create_a = create_action()
         create_r = create_a.create_new_file_by_current()
         if create_r is True:
-            notification.send("Create new hosts file")
             print('* Create new hosts file')
         else:
             print('* No create new hosts file')
 
     def createby():
         create_a = create_action()
-        create_a.create_new_file_by_select()
-        notification.send("Create new hosts file by exists hosts file")
+        create_r = create_a.create_new_file_by_select()
+        if create_r is True:
+            print('* Create by new hosts file')
+        else:
+            print('* No create by new hosts file')
 
     def edit():
         edit_a = edit_action()
@@ -78,7 +77,6 @@ class function:
         set_a = set_action()
         set_r = set_a.set_file()
         if set_r is True:
-            notification.send("Set new hosts file")
             print('* Set new hosts file')
         else:
             print('* No set hosts file')

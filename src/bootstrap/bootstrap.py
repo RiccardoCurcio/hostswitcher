@@ -1,4 +1,4 @@
-from src.logger.logger import logger
+import os
 
 text = """
 ╦ ╦╔═╗╔═╗╔╦╗  ╔═╗╦ ╦╦╔╦╗╔═╗╦ ╦╔═╗╦═╗
@@ -8,13 +8,19 @@ text = """
 """
 
 
-class bootstrap(logger):
+class bootstrap():
     def __init__(self):
-        logger.__init__(self)
-        self.log_info('bootstrap app')
+        self.path_pwd = os.path.dirname(os.path.abspath(__file__))
+        self.path_hosts_custom = self.path_pwd + '/../../hosts_files/'
+
         pass
 
     def start_app(self):
-        self.log_info('start app')
+        self.__crete_hosts_file_dir()
         print(text)
         pass
+
+    def __crete_hosts_file_dir(self):
+        directory = self.path_hosts_custom
+        if not os.path.exists(directory):
+            os.makedirs(directory)

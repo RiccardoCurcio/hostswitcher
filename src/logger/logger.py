@@ -1,13 +1,18 @@
 """logger."""
+import os
 import logging
 from logging.config import fileConfig
-
-fileConfig('src/logger/logging_config.ini')
 
 
 class logger:
     """crudlogger."""
     def __init__(self):
+        self.path_pwd = os.path.dirname(os.path.abspath(__file__))
+        self.path_log_files_custom = self.path_pwd + '/../logger/log_files/'
+        directory = self.path_log_files_custom
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        fileConfig('src/logger/logging_config.ini')
         self.log = logging.getLogger("Host-switcher")
         pass
 

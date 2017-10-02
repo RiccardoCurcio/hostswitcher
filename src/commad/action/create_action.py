@@ -92,4 +92,5 @@ class create_action(logger):
 
     def create_new_file_by_select(self):
         file_selected = self.__select_origin()
-        self.create_new_file_by_current(file_selected)
+        result = self.create_new_file_by_current(file_selected)
+        return result
