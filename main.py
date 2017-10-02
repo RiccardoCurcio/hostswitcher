@@ -10,7 +10,7 @@ class app(logger):
         logger.__init__(self)
         self.log_info(app_name)
         self.boot = bootstrap()
-        self.boot.start_dep()
+        self.boot.start_app()
         pass
 
     @command

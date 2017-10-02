@@ -6,6 +6,7 @@ from src.commad.action.create_action import create_action
 from src.commad.action.list_action import list_action
 from src.commad.action.edit_action import edit_action
 from src.commad.action.set_action import set_action
+from src.commad.action.remove_action import remove_action
 
 
 log = logger()
@@ -23,6 +24,7 @@ Options:
   --edit           edit hosts file
   --set            set hosts file
   --list           list of hosts files
+  --remove         remove custom hosts files
   --help           Show this message and exit.
 """
 
@@ -88,3 +90,8 @@ class function:
         lof = list_a.in_use(lof)
         for file_name in lof:
             print(file_name)
+
+    def remove():
+        remove_a = remove_action()
+        remove_a.remove_file()
+        print('remove complete')

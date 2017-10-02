@@ -17,16 +17,20 @@ class origin_action(logger):
         list_a = list_action()
         lof = list_a.list_of_file()
         count = 0
+        print(' [' + str(count) + '] - to exit')
         for file_name in lof:
+            count = count+1
             f1 = self.path_hosts_custom + file_name
             if filecmp.cmp(f1, self.path_hosts, shallow=1) is True:
                 file_name = '\033[1m' + file_name + '\033[0;0m'
             print(' [' + str(count) + '] - ' + file_name)
-            count = count+1
+        print('\n')
         while True:
-            question = 'Select origin file:'
+            question = 'Select origin file: '
             resp = input(question)
             if resp.isnumeric() is True:
-                if int(resp) in range(0, int(count)-1):
-                    return lof[int(resp)]
+                if int(resp) in range(1, int(count)+1):
+                    return lof[int(resp)-1]
+                if int(resp) == 0:
+                    exit()
         return False
