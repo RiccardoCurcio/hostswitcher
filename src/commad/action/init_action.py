@@ -18,15 +18,24 @@ class init_action(logger):
             default = self.file_name
             name = self.path_hosts_custom + default
             if os.path.exists(name) is True:
-                msg = default + ' exists, do you want overwrite it? (yes/no) '
-                resp = input(msg)
-                if resp == 'yes':
-                    # print(open(hosts, 'r').read().find('#NO-ENV'))
-                    shutil.copyfile(
-                        hosts,
-                        name
-                    )
-                    return True
+                while True:
+                    qmsg = 'exists, do you want overwrite it? (yes/no)'
+                    msg = default + qmsg
+                    resp = input(msg)
+                    if resp == 'yes':
+                        shutil.copyfile(
+                            hosts,
+                            name
+                            )
+                        return True
+                    if resp == 'no':
+                        return False
+            else:
+                shutil.copyfile(
+                    hosts,
+                    name
+                )
+                return True
             return False
         except Exception as e:
             self.log_warning(e)

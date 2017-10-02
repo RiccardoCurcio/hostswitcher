@@ -51,7 +51,7 @@ class function:
             print('* Copy current hosts file [ok]')
         else:
             # notification.send("ERROR Init default hosts file")
-            print('* Copy current hosts file [N]')
+            print('* Copy current hosts file [No]')
 
     def create():
         create_a = create_action()
