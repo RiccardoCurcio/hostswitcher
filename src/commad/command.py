@@ -2,6 +2,7 @@
 from src.logger.logger import logger
 from src.commad.action.init_action import init_action
 from src.commad.action.create_action import create_action
+from src.commad.action.merge_action import merge_action
 from src.commad.action.list_action import list_action
 from src.commad.action.edit_action import edit_action
 from src.commad.action.set_action import set_action
@@ -19,6 +20,7 @@ Options:
   --init           set current hosts file default hosts file
   --create         create new hosts file by current hosts file
   --createby       create new hosts file from selected file
+  --merge          merge two exist files
   --edit           edit hosts file
   --set            set hosts file
   --list           list of hosts files
@@ -58,6 +60,11 @@ class function:
         create_a = create_action()
         create_r = create_a.create_new_file_by_select()
         print_cli.print_dict(create_r)
+
+    def merge():
+        merge_a = merge_action()
+        merge_r = merge_a.merge_files()
+        print_cli.print_dict(merge_r)
 
     def edit():
         edit_a = edit_action()
