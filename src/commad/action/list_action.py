@@ -28,9 +28,10 @@ class list_action(logger):
             f1 = self.path_hosts_custom + compare
             a = os.stat(os.path.join(dir_hosts, compare))
             if filecmp.cmp(f1, self.path_hosts, shallow=1) is True:
+                # str('\033[1m' + compare + '\033[0;0m'),
                 return_list.append(
                     [
-                        str('\033[1m' + compare + '\033[0;0m'),
+                        str('*' + compare),
                         time.ctime(a.st_atime),
                         time.ctime(a.st_ctime)
                     ]

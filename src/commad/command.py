@@ -73,9 +73,8 @@ class function:
         list_a = list_action()
         lof = list_a.list_of_file()
         lof = list_a.in_use(lof)
-        for file_name in lof:
-            print(file_name[0], ' | ', file_name[1], ' | ', file_name[2])
-        print('\n')
+        titles = ['File name', 'Create date', 'Update date']
+        table.print_table(titles, lof)
 
     def remove():
         while True:
@@ -90,3 +89,41 @@ class print_cli:
             print(' ' + dict_risp['msg'])
         if dict_risp['status'] == -1:
             print(' ' + dict_risp['msg'])
+
+
+class table:
+    def print_table(titles=list(), data=list()):
+        try:
+            col_num = len(titles)
+            titles = list(titles)
+            table = list()
+            table.append(titles)
+            for row in data:
+                table.append(row)
+            col_len = 0
+            # get max string
+            for row in table:
+                for i in range(col_num):
+                    if len(row[i]) > col_len:
+                        col_len = len(row[i])
+
+            col_len = col_len + 2
+            # set len string
+            print("-"*((col_num*col_len)+col_num))
+            count_row = 0
+            for row in table:
+                string_row = "|"
+                for i in range(col_num):
+                    add_c = col_len - len(row[i])
+                    row[i] = row[i] + (" "*add_c)
+                    if row[i].find("*") == 0:
+                        row[i] = str('\033[1m' + row[i][1:] + ' \033[0;0m')
+                    if count_row == 0:
+                        row[i] = str('\033[1m' + row[i] + '\033[0;0m')
+                    string_row = string_row + row[i] + "|"
+                print(string_row)
+                print("-"*((col_num*col_len)+col_num))
+                count_row = count_row + 1
+            print("\n")
+        except Exception as e:
+            print(e)
