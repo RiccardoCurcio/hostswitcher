@@ -26,7 +26,7 @@ class origin_action(logger):
             print(' [' + str(count) + '] - ' + file_name)
         print('\n')
         while True:
-            question = 'Select origin file: '
+            question = ' Select origin file: '
             resp = input(question)
             if resp.isnumeric() is True:
                 if int(resp) in range(1, int(count)+1):

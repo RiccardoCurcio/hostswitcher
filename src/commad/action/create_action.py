@@ -12,6 +12,34 @@ class create_action(logger):
         self.path_hosts_custom = self.path_pwd + '/../../../hosts_files/'
         self.path_hosts = '/etc/hosts'
         self.file_name = 'hosts'
+        self.return_dict = dict(
+            {
+                "status": 0,
+                "msg": None
+            }
+        )
+
+    def create_new_file_by_current(self, origin=None):
+        try:
+            name = self.__insert_name()
+            name = self.file_name + '.' + name
+            copy_result = self.__copy_current_hosts(name, origin)
+            if copy_result is False:
+                msg = '\033[1m' + name + '\033[0;0m not created!'
+                return self.__set_return(-1, msg)
+            file_path = self.path_hosts_custom + name
+            os.system("vim " + file_path)
+            msg = '\033[1m' + name + '\033[0;0m created!'
+            return self.__set_return(0, msg)
+        except Exception as e:
+            self.log_warning(e)
+            msg = '\033[1m' + name + '\033[0;0m not created!'
+            return self.__set_return(-1, msg, e)
+
+    def create_new_file_by_select(self):
+        file_selected = self.__select_origin()
+        result = self.create_new_file_by_current(file_selected)
+        return result
 
     def __copy_current_hosts(self, name, origin=None):
         if origin is None:
@@ -40,15 +68,12 @@ class create_action(logger):
 
                 self.__set_title(new_name, name)
                 return True
-
-            return False
         except Exception as e:
             self.log_warning(e)
             return False
-        return True
 
     def __insert_name(self):
-        name = input("Please insert new hosts file name: ")
+        name = input(" Please insert new hosts file name: ")
         return name
 
     def __set_title(self, file_path, name):
@@ -72,25 +97,16 @@ class create_action(logger):
 
         my_file_w.close()
 
-    def create_new_file_by_current(self, origin=None):
-        try:
-            name = self.__insert_name()
-            name = self.file_name + '.' + name
-            copy_result = self.__copy_current_hosts(name, origin)
-            if copy_result is False:
-                return False
-            file_path = self.path_hosts_custom + name
-            os.system("vim " + file_path)
-            return True
-        except Exception as e:
-            self.log_warning(e)
-            return False
-
     def __select_origin(self):
         origin_a = origin_action()
         return origin_a.select_origin()
 
-    def create_new_file_by_select(self):
-        file_selected = self.__select_origin()
-        result = self.create_new_file_by_current(file_selected)
-        return result
+    def __set_return(self, status=0, msg=None, error=None):
+        self.return_dict.update(
+            {
+                "status": status,
+                "msg": msg,
+                "error": error
+            }
+        )
+        return self.return_dict

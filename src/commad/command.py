@@ -47,48 +47,46 @@ class function:
     def init():
         init_a = init_action()
         init_r = init_a.copy_current_host_file()
-        if init_r is True:
-            print('* Copy current hosts file')
-        else:
-            print('* No copy current hosts file')
+        print_cli.print_dict(init_r)
 
     def create():
         create_a = create_action()
         create_r = create_a.create_new_file_by_current()
-        if create_r is True:
-            print('* Create new hosts file')
-        else:
-            print('* No create new hosts file')
+        print_cli.print_dict(create_r)
 
     def createby():
         create_a = create_action()
         create_r = create_a.create_new_file_by_select()
-        if create_r is True:
-            print('* Create by new hosts file')
-        else:
-            print('* No create by new hosts file')
+        print_cli.print_dict(create_r)
 
     def edit():
         edit_a = edit_action()
-        edit_a.edit_file()
-        print('Edit complete')
+        edit_r = edit_a.edit_file()
+        print_cli.print_dict(edit_r)
 
     def set():
         set_a = set_action()
         set_r = set_a.set_file()
-        if set_r is True:
-            print('* Set new hosts file')
-        else:
-            print('* No set hosts file')
+        print_cli.print_dict(set_r)
 
     def list():
         list_a = list_action()
         lof = list_a.list_of_file()
         lof = list_a.in_use(lof)
         for file_name in lof:
-            print(file_name)
+            print(file_name[0], ' | ', file_name[1], ' | ', file_name[2])
+        print('\n')
 
     def remove():
-        remove_a = remove_action()
-        remove_a.remove_file()
-        print('remove complete')
+        while True:
+            remove_a = remove_action()
+            remove_r = remove_a.remove_file()
+            print_cli.print_dict(remove_r)
+
+
+class print_cli:
+    def print_dict(dict_risp):
+        if dict_risp['status'] == 0:
+            print(' ' + dict_risp['msg'])
+        if dict_risp['status'] == -1:
+            print(' ' + dict_risp['msg'])

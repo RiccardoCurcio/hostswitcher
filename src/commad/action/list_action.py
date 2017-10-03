@@ -1,5 +1,6 @@
 """list."""
 import os
+import time
 import filecmp
 from src.logger.logger import logger
 
@@ -22,11 +23,25 @@ class list_action(logger):
 
     def in_use(self, lof=list()):
         return_list = list()
+        dir_hosts = self.path_hosts_custom
         for compare in lof:
             f1 = self.path_hosts_custom + compare
+            a = os.stat(os.path.join(dir_hosts, compare))
             if filecmp.cmp(f1, self.path_hosts, shallow=1) is True:
-
-                return_list.append(str(' \033[1m' + compare + '\033[0;0m'))
+                return_list.append(
+                    [
+                        str('\033[1m' + compare + '\033[0;0m'),
+                        time.ctime(a.st_atime),
+                        time.ctime(a.st_ctime)
+                    ]
+                )
             else:
-                return_list.append(str(' '+compare))
+                return_list.append(
+                    [
+                        compare,
+                        time.ctime(a.st_atime),
+                        time.ctime(a.st_ctime)
+                    ]
+                )
+
         return return_list

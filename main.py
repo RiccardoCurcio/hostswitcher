@@ -6,6 +6,7 @@ from src.commad.command import command
 
 class app():
     def __init__(self, app_name):
+        # print(sys.platform)
         pass
 
     @command
