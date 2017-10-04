@@ -18,10 +18,16 @@ class edit_action(logger):
             }
         )
 
-    def edit_file(self):
+    def edit_file(self, file_by_arg=None):
         try:
-            file_selcted = self.__select_origin()
+            if file_by_arg is None:
+                file_selcted = self.__select_origin()
+            else:
+                file_selcted = file_by_arg
             file_path = self.path_hosts_custom + file_selcted
+            if os.path.exists(file_path) is not True:
+                file_selcted = self.__select_origin()
+                file_path = self.path_hosts_custom + file_selcted
             os.system("vim " + file_path)
             msg = '\033[1m' + file_selcted + '\033[0;0m edit!'
             return self.__set_return(0, msg)

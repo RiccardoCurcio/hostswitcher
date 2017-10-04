@@ -34,7 +34,7 @@ def command(func):
         try:
             log.log_info('Command cli start')
             func = getattr(function, arg[1][2:])
-            func()
+            func(arg)
         except Exception as e:
             log.log_warning(e)
             function.help()
@@ -46,44 +46,58 @@ class function:
     def help():
         print(description)
 
-    def init():
+    def init(arg=list):
+        print(arg)
         init_a = init_action()
         init_r = init_a.copy_current_host_file()
         print_cli.print_dict(init_r)
 
-    def create():
+    def create(arg=list):
+        print(arg)
         create_a = create_action()
         create_r = create_a.create_new_file_by_current()
         print_cli.print_dict(create_r)
 
-    def createby():
+    def createby(arg=list):
+        print(arg)
         create_a = create_action()
         create_r = create_a.create_new_file_by_select()
         print_cli.print_dict(create_r)
 
-    def merge():
+    def merge(arg=list):
+        print(arg)
         merge_a = merge_action()
         merge_r = merge_a.merge_files()
         print_cli.print_dict(merge_r)
 
-    def edit():
-        edit_a = edit_action()
-        edit_r = edit_a.edit_file()
-        print_cli.print_dict(edit_r)
+    def edit(arg=list):
+        print(arg)
+        try:
+            edit_a = edit_action()
+            edit_r = edit_a.edit_file(arg[2])
+            print_cli.print_dict(edit_r)
+        except Exception as e:
+            print(e)
+            edit_a = edit_action()
+            edit_r = edit_a.edit_file()
+            print_cli.print_dict(edit_r)
 
-    def set():
+    def set(arg=list):
+        print(arg)
         set_a = set_action()
         set_r = set_a.set_file()
         print_cli.print_dict(set_r)
 
-    def list():
+    def list(arg=list):
+        print(arg)
         list_a = list_action()
         lof = list_a.list_of_file()
         lof = list_a.in_use(lof)
         titles = ['File name', 'Create date', 'Update date']
         table.print_table(titles, lof)
 
-    def remove():
+    def remove(arg=list):
+        print(arg)
         while True:
             remove_a = remove_action()
             remove_r = remove_a.remove_file()
