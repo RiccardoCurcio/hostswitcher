@@ -17,15 +17,15 @@ Usage: main.py [OPTIONS]
   Host-switcher
 
 Options:
-  --init           set current hosts file default hosts file
-  --create         create new hosts file by current hosts file
-  --createby       create new hosts file from selected file
-  --merge          merge two exist files
-  --edit           edit hosts file
-  --set            set hosts file
-  --list           list of hosts files
-  --remove         remove custom hosts files
-  --help           Show this message and exit.
+  --init                                                                set current hosts file default hosts file
+  --create   [name new file]                                            create new hosts file by current hosts file
+  --createby [hosts.{name file}] [name new file]                        create new hosts file from selected file
+  --merge    [hosts.{name file}] [hosts.{name file}] [name new file]    merge two exist files
+  --edit     [hosts.{name file}]                                        edit hosts file
+  --set      [hosts.{name file}]                                        set hosts file
+  --list                                                                list of hosts files
+  --remove   [hosts.{name file}]                                        remove custom hosts files
+  --help                                                                Show this message and exit.
 """
 
 
@@ -47,49 +47,61 @@ class function:
         print(description)
 
     def init(arg=list):
-        print(arg)
         init_a = init_action()
         init_r = init_a.copy_current_host_file()
         print_cli.print_dict(init_r)
 
     def create(arg=list):
-        print(arg)
-        create_a = create_action()
-        create_r = create_a.create_new_file_by_current()
-        print_cli.print_dict(create_r)
+        try:
+            create_a = create_action()
+            create_r = create_a.create_new_file_by_current(None, arg[2])
+            print_cli.print_dict(create_r)
+        except Exception as e:
+            create_a = create_action()
+            create_r = create_a.create_new_file_by_current()
+            print_cli.print_dict(create_r)
 
     def createby(arg=list):
-        print(arg)
-        create_a = create_action()
-        create_r = create_a.create_new_file_by_select()
-        print_cli.print_dict(create_r)
+        try:
+            create_a = create_action()
+            create_r = create_a.create_new_file_by_select(arg[2], arg[3])
+            print_cli.print_dict(create_r)
+        except Exception as e:
+            create_a = create_action()
+            create_r = create_a.create_new_file_by_select()
+            print_cli.print_dict(create_r)
 
     def merge(arg=list):
-        print(arg)
-        merge_a = merge_action()
-        merge_r = merge_a.merge_files()
-        print_cli.print_dict(merge_r)
+        try:
+            merge_a = merge_action()
+            merge_r = merge_a.merge_files(arg[2], arg[3], arg[4])
+            print_cli.print_dict(merge_r)
+        except Exception as e:
+            merge_a = merge_action()
+            merge_r = merge_a.merge_files()
+            print_cli.print_dict(merge_r)
 
     def edit(arg=list):
-        print(arg)
         try:
             edit_a = edit_action()
             edit_r = edit_a.edit_file(arg[2])
             print_cli.print_dict(edit_r)
         except Exception as e:
-            print(e)
             edit_a = edit_action()
             edit_r = edit_a.edit_file()
             print_cli.print_dict(edit_r)
 
     def set(arg=list):
-        print(arg)
-        set_a = set_action()
-        set_r = set_a.set_file()
-        print_cli.print_dict(set_r)
+        try:
+            set_a = set_action()
+            set_r = set_a.set_file(arg[2])
+            print_cli.print_dict(set_r)
+        except Exception as e:
+            set_a = set_action()
+            set_r = set_a.set_file()
+            print_cli.print_dict(set_r)
 
     def list(arg=list):
-        print(arg)
         list_a = list_action()
         lof = list_a.list_of_file()
         lof = list_a.in_use(lof)
@@ -97,11 +109,15 @@ class function:
         table.print_table(titles, lof)
 
     def remove(arg=list):
-        print(arg)
-        while True:
+        try:
             remove_a = remove_action()
-            remove_r = remove_a.remove_file()
+            remove_r = remove_a.remove_file(arg[2])
             print_cli.print_dict(remove_r)
+        except Exception as e:
+            while True:
+                remove_a = remove_action()
+                remove_r = remove_a.remove_file()
+                print_cli.print_dict(remove_r)
 
 
 class print_cli:

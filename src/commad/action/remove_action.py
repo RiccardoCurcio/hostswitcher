@@ -18,9 +18,10 @@ class remove_action(logger):
             }
         )
 
-    def remove_file(self):
+    def remove_file(self, file_selcted=None):
         try:
-            file_selcted = self.__select_origin()
+            if file_selcted is None:
+                file_selcted = self.__select_origin()
             file_path = self.path_hosts_custom + file_selcted
             while True:
                 question = ' Do you want remove ' + file_selcted + '? (yes/no)'

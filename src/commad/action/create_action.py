@@ -19,12 +19,14 @@ class create_action(logger):
             }
         )
 
-    def create_new_file_by_current(self, origin=None):
+    def create_new_file_by_current(self, origin=None, name=None):
         try:
-            name = self.__insert_name()
+            if name is None:
+                name = self.__insert_name()
             name = self.file_name + '.' + name
             copy_result = self.__copy_current_hosts(name, origin)
             if copy_result is False:
+                print(copy_result)
                 msg = '\033[1m' + name + '\033[0;0m not created!'
                 return self.__set_return(-1, msg)
             file_path = self.path_hosts_custom + name
@@ -33,12 +35,17 @@ class create_action(logger):
             return self.__set_return(0, msg)
         except Exception as e:
             self.log_warning(e)
+            print(copy_result)
             msg = '\033[1m' + name + '\033[0;0m not created!'
             return self.__set_return(-1, msg, e)
 
-    def create_new_file_by_select(self):
-        file_selected = self.__select_origin()
-        result = self.create_new_file_by_current(file_selected)
+    def create_new_file_by_select(self, origin=None, name=None):
+
+        if origin is None:
+            file_selected = self.__select_origin()
+        else:
+            file_selected = origin
+        result = self.create_new_file_by_current(file_selected, name)
         return result
 
     def __copy_current_hosts(self, name, origin=None):
@@ -47,6 +54,8 @@ class create_action(logger):
         else:
             hosts = self.path_hosts_custom + origin
         new_name = self.path_hosts_custom + name
+        print(origin)
+        print(name)
         try:
             if os.path.exists(new_name) is True:
                 question = name + ' exists, do you want overwrite it? (yes/no)'

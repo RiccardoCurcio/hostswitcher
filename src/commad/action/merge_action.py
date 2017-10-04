@@ -22,13 +22,23 @@ class merge_action(logger):
             }
         )
 
-    def merge_files(self):
+    def merge_files(self, origin_one=None, origin_two=None, new_name=None):
         """Merge files."""
         try:
             files = list()
-            files.append(self.__select_origin())
-            files.append(self.__select_origin())
-            new_name = self.__insert_name()
+            if origin_one is None:
+                files.append(self.__select_origin())
+            else:
+                files.append(origin_one)
+
+            if origin_two is None:
+                files.append(self.__select_origin())
+            else:
+                files.append(origin_two)
+
+            if new_name is None:
+                new_name = self.__insert_name()
+
             new_name = 'hosts.' + new_name
             file_path_new = self.path_hosts_custom + new_name
 
