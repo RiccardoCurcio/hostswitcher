@@ -110,9 +110,10 @@ class function:
 
     def remove(arg=list):
         try:
-            remove_a = remove_action()
-            remove_r = remove_a.remove_file(arg[2])
-            print_cli.print_dict(remove_r)
+            for origin in arg[2:]:
+                remove_a = remove_action()
+                remove_r = remove_a.remove_file(origin)
+                print_cli.print_dict(remove_r)
         except Exception as e:
             while True:
                 remove_a = remove_action()
