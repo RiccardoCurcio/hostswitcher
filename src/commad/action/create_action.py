@@ -15,7 +15,10 @@ class create_action(logger):
         self.return_dict = dict(
             {
                 "status": 0,
-                "msg": None
+                "origin": None,
+                "newfile": None,
+                "msg": None,
+                "error": None
             }
         )
 
@@ -26,16 +29,17 @@ class create_action(logger):
             name = self.file_name + '.' + name
             copy_result = self.__copy_current_hosts(name, origin)
             if copy_result is False:
-                print(copy_result)
+                # print(copy_result)
                 msg = '\033[1m' + name + '\033[0;0m not created!'
                 return self.__set_return(-1, msg)
             file_path = self.path_hosts_custom + name
             os.system("vim " + file_path)
             msg = '\033[1m' + name + '\033[0;0m created!'
-            return self.__set_return(0, msg)
+            if origin is not None:
+                origin = origin[6:]
+            return self.__set_return(0, msg, None, origin, name[6:])
         except Exception as e:
             self.log_warning(e)
-            print(copy_result)
             msg = '\033[1m' + name + '\033[0;0m not created!'
             return self.__set_return(-1, msg, e)
 
@@ -107,12 +111,17 @@ class create_action(logger):
         origin_a = origin_action()
         return origin_a.select_origin()
 
-    def __set_return(self, status=0, msg=None, error=None):
-        self.return_dict.update(
-            {
-                "status": status,
-                "msg": msg,
-                "error": error
-            }
-        )
+    def __set_return(self, status=0, msg=None, error=None, ori=None, new=None):
+        try:
+            self.return_dict.update(
+                {
+                    "status": status,
+                    "origin": ori,
+                    "newfile": new,
+                    "msg": msg,
+                    "error": error
+                }
+            )
+        except Exception as e:
+            print(e)
         return self.return_dict

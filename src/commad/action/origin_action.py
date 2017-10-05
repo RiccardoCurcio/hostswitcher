@@ -15,7 +15,7 @@ class origin_action(logger):
 
     def select_origin(self):
         list_a = list_action()
-        lof = list_a.list_of_file()
+        lof = list_a.list_of_file()['list']
         count = 0
         print(' [' + str(count) + '] - to exit')
         for file_name in lof:

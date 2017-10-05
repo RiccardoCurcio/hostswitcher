@@ -10,6 +10,8 @@ from src.commad.action.remove_action import remove_action
 
 
 log = logger()
+print_dict_res = False
+global print_dict_res
 
 description = """
 Usage: main.py [OPTIONS]
@@ -32,7 +34,6 @@ Options:
 def command(func):
     def getArgs(self, arg):
         try:
-            log.log_info('Command cli start')
             func = getattr(function, arg[1][2:])
             func(arg)
         except Exception as e:
@@ -102,11 +103,15 @@ class function:
             print_cli.print_dict(set_r)
 
     def list(arg=list):
-        list_a = list_action()
-        lof = list_a.list_of_file()
-        lof = list_a.in_use(lof)
-        titles = ['File name', 'Create date', 'Update date']
-        table.print_table(titles, lof)
+        try:
+            list_a = list_action()
+            lof_list = list_a.list_of_file()
+            lof = list_a.in_use(lof_list['list'])
+            titles = ['File name', 'Create date', 'Update date']
+            table.print_table(titles, lof)
+            print_cli.print_dict(lof_list)
+        except Exception as e:
+            print(e)
 
     def remove(arg=list):
         try:
@@ -123,9 +128,14 @@ class function:
 
 class print_cli:
     def print_dict(dict_risp):
+        if print_dict_res is True:
+            print(dict_risp)
         if dict_risp['status'] == 0:
-            print(' ' + dict_risp['msg'])
+            log.log_info(dict_risp)
+            if dict_risp['msg'] is not None:
+                print(' ' + dict_risp['msg'])
         if dict_risp['status'] == -1:
+            log.log_error(dict_risp)
             print(' ' + dict_risp['msg'])
 
 

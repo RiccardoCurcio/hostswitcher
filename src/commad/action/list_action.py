@@ -11,12 +11,19 @@ class list_action(logger):
         self.path_pwd = os.path.dirname(os.path.abspath(__file__))
         self.path_hosts_custom = self.path_pwd + '/../../../hosts_files/'
         self.path_hosts = '/etc/hosts'
+        self.return_dict = dict(
+            {
+                "status": 0,
+                "msg": None
+            }
+        )
 
     def list_of_file(self):
         try:
             dir_hosts = self.path_hosts_custom
             list_of_file = os.listdir(str(dir_hosts))
-            return list_of_file
+            return self.__set_return(0, None, None, list_of_file)
+            # return list_of_file
         except Exception as e:
             self.log_warning(e)
             return False
@@ -46,3 +53,14 @@ class list_action(logger):
                 )
 
         return return_list
+
+    def __set_return(self, status=0, msg=None, error=None, list_return=list):
+        self.return_dict.update(
+            {
+                "status": status,
+                "msg": msg,
+                "list": list_return,
+                "error": error
+            }
+        )
+        return self.return_dict

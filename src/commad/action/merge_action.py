@@ -50,6 +50,7 @@ class merge_action(logger):
             for line in self.__merge(files, new_name):
                 new_file_w.write(line)
             new_file_w.close()
+            os.system("vim " + file_path_new)
             msg = 'Files meged in ' + new_name + '!'
             return self.__set_return(0, msg)
         except Exception as e:
