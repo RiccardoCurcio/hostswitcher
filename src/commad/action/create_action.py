@@ -40,11 +40,10 @@ class create_action(logger):
             return self.__set_return(-1, msg, e)
 
     def create_new_file_by_select(self, origin=None, name=None):
-
         if origin is None:
             file_selected = self.__select_origin()
         else:
-            file_selected = origin
+            file_selected = 'hosts.' + origin
         result = self.create_new_file_by_current(file_selected, name)
         return result
 
@@ -54,8 +53,6 @@ class create_action(logger):
         else:
             hosts = self.path_hosts_custom + origin
         new_name = self.path_hosts_custom + name
-        print(origin)
-        print(name)
         try:
             if os.path.exists(new_name) is True:
                 question = name + ' exists, do you want overwrite it? (yes/no)'

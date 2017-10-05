@@ -29,12 +29,12 @@ class merge_action(logger):
             if origin_one is None:
                 files.append(self.__select_origin())
             else:
-                files.append(origin_one)
+                files.append('hosts.' + origin_one)
 
             if origin_two is None:
                 files.append(self.__select_origin())
             else:
-                files.append(origin_two)
+                files.append('hosts.' + origin_two)
 
             if new_name is None:
                 new_name = self.__insert_name()

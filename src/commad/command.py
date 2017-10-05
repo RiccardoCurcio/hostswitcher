@@ -17,15 +17,15 @@ Usage: main.py [OPTIONS]
   Host-switcher
 
 Options:
-  --init                                                                set current hosts file default hosts file
-  --create   [name new file]                                            create new hosts file by current hosts file
-  --createby [hosts.{name file}] [name new file]                        create new hosts file from selected file
-  --merge    [hosts.{name file}] [hosts.{name file}] [name new file]    merge two exist files
-  --edit     [hosts.{name file}]                                        edit hosts file
-  --set      [hosts.{name file}]                                        set hosts file
-  --list                                                                list of hosts files
-  --remove   [hosts.{name file}]                                        remove custom hosts files
-  --help                                                                Show this message and exit.
+  --init                                                    set current hosts file default hosts file
+  --create   [name new file]                                create new hosts file by current hosts file
+  --createby [origin-name] [name new file]                  create new hosts file from selected file
+  --merge    [origin-name] [origin-name] [name new file]    merge two exist files
+  --edit     [origin-name]                                  edit hosts file
+  --set      [origin-name]                                  set hosts file
+  --list                                                    list of hosts files
+  --remove   [origin-name]                                  remove custom hosts files
+  --help                                                    Show this message and exit.
 """
 
 
@@ -146,7 +146,7 @@ class table:
 
             col_len = col_len + 2
             # set len string
-            print("-"*((col_num*col_len)+col_num))
+            print("-"*(((col_num*col_len)+col_num)-5))
             count_row = 0
             for row in table:
                 string_row = "|"
@@ -154,12 +154,16 @@ class table:
                     add_c = col_len - len(row[i])
                     row[i] = row[i] + (" "*add_c)
                     if row[i].find("*") == 0:
-                        row[i] = str('\033[1m' + row[i][1:] + ' \033[0;0m')
-                    if count_row == 0:
+                        row[i] = str('\033[1m' + row[i][7:] + ' \033[0;0m')
+                    elif i == 0 and count_row != 0:
+                        row[i] = str(row[i][6:])
+                    if count_row == 0 and i == 0:
+                        row[i] = str('\033[1m' + row[i][:-6] + '\033[0;0m')
+                    elif count_row == 0 and i != 0:
                         row[i] = str('\033[1m' + row[i] + '\033[0;0m')
                     string_row = string_row + row[i] + "|"
                 print(string_row)
-                print("-"*((col_num*col_len)+col_num))
+                print("-"*(((col_num*col_len)+col_num)-5))
                 count_row = count_row + 1
             print("\n")
         except Exception as e:

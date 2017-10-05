@@ -18,12 +18,12 @@ class edit_action(logger):
             }
         )
 
-    def edit_file(self, file_by_arg=None):
+    def edit_file(self, origin=None):
         try:
-            if file_by_arg is None:
+            if origin is None:
                 file_selcted = self.__select_origin()
             else:
-                file_selcted = file_by_arg
+                file_selcted = 'hosts.' + origin
             file_path = self.path_hosts_custom + file_selcted
             if os.path.exists(file_path) is not True:
                 file_selcted = self.__select_origin()

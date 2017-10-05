@@ -18,10 +18,12 @@ class set_action(logger):
             }
         )
 
-    def set_file(self, file_selcted=None):
+    def set_file(self, origin=None):
         try:
-            if file_selcted is None:
+            if origin is None:
                 file_selcted = self.__select_origin()
+            else:
+                file_selcted = 'hosts.' + origin
             file_path = self.path_hosts_custom + file_selcted
             os.system("sudo cp " + file_path + " " + self.path_hosts)
             msg = '\033[1m' + file_selcted + '\033[0;0m set!'
