@@ -16,6 +16,6 @@ class app():
 
 if __name__ == '__main__':
     boot = bootstrap()
-    boot.start_app()
+    boot.start_app(sys.argv[len(sys.argv)-1])
     app = app("Host-switcher")
     app.run(sys.argv)
