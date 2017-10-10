@@ -3,7 +3,7 @@ import os
 import filecmp
 from src.logger.logger import logger
 from src.commad.action.list_action import list_action
-from src.lib.os_resolver import os_resolver
+from src.library.os_resolver import os_resolver
 
 
 class origin_action(logger):

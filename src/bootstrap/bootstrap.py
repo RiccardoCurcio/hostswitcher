@@ -2,7 +2,7 @@
 
 import os
 from src.commad.action.init_action import init_action
-from src.lib.os_resolver import os_resolver
+from src.library.os_resolver import os_resolver
 
 
 class bootstrap():

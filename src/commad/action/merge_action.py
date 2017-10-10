@@ -3,7 +3,7 @@ import os
 import difflib
 from src.logger.logger import logger
 from src.commad.action.origin_action import origin_action
-from src.lib.os_resolver import os_resolver
+from src.library.os_resolver import os_resolver
 
 
 class merge_action(logger):

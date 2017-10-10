@@ -3,7 +3,7 @@ import os
 import time
 import filecmp
 from src.logger.logger import logger
-from src.lib.os_resolver import os_resolver
+from src.library.os_resolver import os_resolver
 
 
 class list_action(logger):

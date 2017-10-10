@@ -2,7 +2,7 @@
 import os
 import shutil
 from src.logger.logger import logger
-from src.lib.os_resolver import os_resolver
+from src.library.os_resolver import os_resolver
 
 
 class init_action(logger):
