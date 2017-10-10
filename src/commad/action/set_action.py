@@ -27,7 +27,7 @@ class set_action(logger):
             else:
                 file_selcted = 'hosts.' + origin
             file_path = self.path_hosts_custom + file_selcted
-            os.system("sudo cp " + file_path + " " + self.path_hosts)
+            self.osr.change_hosts(file_path)
             msg = '\033[1m' + file_selcted + '\033[0;0m set!'
             return self.__set_return(0, msg)
         except Exception as e:
