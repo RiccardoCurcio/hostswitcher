@@ -3,14 +3,16 @@ import os
 import shutil
 from src.logger.logger import logger
 from src.commad.action.origin_action import origin_action
+from src.lib.os_resolver import os_resolver
 
 
 class create_action(logger):
     def __init__(self):
         logger.__init__(self)
+        self.osr = os_resolver()
         self.path_pwd = os.path.dirname(os.path.abspath(__file__))
         self.path_hosts_custom = self.path_pwd + '/../../../hosts_files/'
-        self.path_hosts = '/etc/hosts'
+        self.path_hosts = self.osr.get_hosts_path()
         self.file_name = 'hosts'
         self.return_dict = dict(
             {
@@ -33,7 +35,7 @@ class create_action(logger):
                 msg = '\033[1m' + name + '\033[0;0m not created!'
                 return self.__set_return(-1, msg)
             file_path = self.path_hosts_custom + name
-            os.system("vim " + file_path)
+            self.osr.launch_editon(file_path)
             msg = '\033[1m' + name + '\033[0;0m created!'
             if origin is not None:
                 origin = origin[6:]

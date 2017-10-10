@@ -44,7 +44,6 @@ def command(func):
             function.help()
     return getArgs
 
-
 class function:
 
     def help():

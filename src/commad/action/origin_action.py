@@ -3,14 +3,16 @@ import os
 import filecmp
 from src.logger.logger import logger
 from src.commad.action.list_action import list_action
+from src.lib.os_resolver import os_resolver
 
 
 class origin_action(logger):
     def __init__(self):
         logger.__init__(self)
+        self.osr = os_resolver()
         self.path_pwd = os.path.dirname(os.path.abspath(__file__))
         self.path_hosts_custom = self.path_pwd + '/../../../hosts_files/'
-        self.path_hosts = '/etc/hosts'
+        self.path_hosts = self.osr.get_hosts_path()
         self.file_name = 'hosts.default'
 
     def select_origin(self):
