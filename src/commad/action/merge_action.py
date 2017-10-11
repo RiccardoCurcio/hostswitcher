@@ -3,6 +3,7 @@ import os
 import difflib
 from src.logger.logger import logger
 from src.commad.action.origin_action import origin_action
+from src.library.os_resolver import os_resolver
 
 
 class merge_action(logger):
@@ -11,9 +12,10 @@ class merge_action(logger):
     def __init__(self):
         """Init class."""
         logger.__init__(self)
+        self.osr = os_resolver()
         self.path_pwd = os.path.dirname(os.path.abspath(__file__))
         self.path_hosts_custom = self.path_pwd + '/../../../hosts_files/'
-        self.path_hosts = '/etc/hosts'
+        self.path_hosts = self.osr.get_hosts_path()
         self.file_name = 'hosts.default'
         self.return_dict = dict(
             {
@@ -50,7 +52,7 @@ class merge_action(logger):
             for line in self.__merge(files, new_name):
                 new_file_w.write(line)
             new_file_w.close()
-            os.system("vim " + file_path_new)
+            self.osr.launch_editon(file_path_new)
             msg = 'Files meged in ' + new_name + '!'
             return self.__set_return(0, msg)
         except Exception as e:

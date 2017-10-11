@@ -2,14 +2,16 @@
 import os
 from src.logger.logger import logger
 from src.commad.action.origin_action import origin_action
+from src.library.os_resolver import os_resolver
 
 
 class set_action(logger):
     def __init__(self):
         logger.__init__(self)
+        self.osr = os_resolver()
         self.path_pwd = os.path.dirname(os.path.abspath(__file__))
         self.path_hosts_custom = self.path_pwd + '/../../../hosts_files/'
-        self.path_hosts = '/etc/hosts'
+        self.path_hosts = self.osr.get_hosts_path()
         self.file_name = 'hosts.default'
         self.return_dict = dict(
             {
@@ -25,7 +27,7 @@ class set_action(logger):
             else:
                 file_selcted = 'hosts.' + origin
             file_path = self.path_hosts_custom + file_selcted
-            os.system("sudo cp " + file_path + " " + self.path_hosts)
+            self.osr.change_hosts(file_path)
             msg = '\033[1m' + file_selcted + '\033[0;0m set!'
             return self.__set_return(0, msg)
         except Exception as e:

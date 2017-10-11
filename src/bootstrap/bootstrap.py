@@ -1,9 +1,13 @@
+# encoding=utf8
+
 import os
 from src.commad.action.init_action import init_action
+from src.library.os_resolver import os_resolver
 
 
 class bootstrap():
     def __init__(self):
+        self.osr = os_resolver()
         self.path_pwd = os.path.dirname(os.path.abspath(__file__))
         self.path_hosts_custom = self.path_pwd + '/../../hosts_files/'
         pass
@@ -26,6 +30,6 @@ class bootstrap():
 ╦ ╦╔═╗╔═╗╔╦╗  ╔═╗╦ ╦╦╔╦╗╔═╗╦ ╦╔═╗╦═╗
 ╠═╣║ ║╚═╗ ║───╚═╗║║║║ ║ ║  ╠═╣║╣ ╠╦╝
 ╩ ╩╚═╝╚═╝ ╩   ╚═╝╚╩╝╩ ╩ ╚═╝╩ ╩╚═╝╩╚═
-
         """
         print(print_title)
+        print('OS: ' + self.osr.get_os())
