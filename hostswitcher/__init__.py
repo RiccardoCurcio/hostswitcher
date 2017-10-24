@@ -1,7 +1,8 @@
 from hostswitcher.cli import cli
 from hostswitcher.version import version
-from hostswitcher.utils.file import *
 from hostswitcher.utils import os_resolver
+from hostswitcher.utils.logger import logger
+from hostswitcher.utils.file import *
 
 import os
 
@@ -15,7 +16,7 @@ class Hostswitcher(object):
         ╠═╣║ ║╚═╗ ║───╚═╗║║║║ ║ ║  ╠═╣║╣ ╠╦╝
         ╩ ╩╚═╝╚═╝ ╩   ╚═╝╚╩╝╩ ╩ ╚═╝╩ ╩╚═╝╩╚═
         '''
-    
+        
     def __init__(self):
         self.__print_title()
         self.__custom_hosts_path()
@@ -46,7 +47,6 @@ class Hostswitcher(object):
         class_ = getattr(commands, '%s_%s' % (self.args['command'], 'command'))
         
         cmd = class_(self.args)
-        
 
 def main():
     app = Hostswitcher()

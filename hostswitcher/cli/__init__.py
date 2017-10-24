@@ -85,7 +85,6 @@ class cli(object):
         merge_parser.add_argument('name', nargs=1, default=str(),
                                     action='store', help = 'New hosts file name')
 
-
         ## Setup options for remove
         remove_parser._positionals.title='Args'
         remove_parser._optionals.title=None
