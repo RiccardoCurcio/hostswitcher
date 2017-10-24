@@ -16,7 +16,9 @@ class Hostswitcher(object):
         ╠═╣║ ║╚═╗ ║───╚═╗║║║║ ║ ║  ╠═╣║╣ ╠╦╝
         ╩ ╩╚═╝╚═╝ ╩   ╚═╝╚╩╝╩ ╩ ╚═╝╩ ╩╚═╝╩╚═
         '''
-        
+
+    log = logger()
+    
     def __init__(self):
         self.__print_title()
         self.__custom_hosts_path()

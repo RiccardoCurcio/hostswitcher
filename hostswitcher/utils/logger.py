@@ -10,8 +10,8 @@ from hostswitcher.utils.file import *
 
 class logger(logging.Logger):
     
-    def __init__(self):
-        super(logger, self).__init__(name='hostswitcher')
+    def __init__(self, name='hostswitcher'):
+        super(logger, self).__init__(name=name)
 
         self.level=logging.INFO
 

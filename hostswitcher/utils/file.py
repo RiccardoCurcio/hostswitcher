@@ -16,10 +16,7 @@ def create_file(filename):
                 create_path(os.path.dirname(filename))
             except OSError as e:
                 print(e)
-
-            try:
-                open(filename,'w').close()
-            except OSError as e:
-                print(e)
-        else:
-            print('%s alredy exists' % (filename))
+        try:
+            open(filename,'w').close()
+        except OSError as e:
+            print(e)
