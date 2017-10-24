@@ -12,7 +12,7 @@ requirements = [
 ]
 
 setup(
-    name="hostswithcer",
+    name="hostswitcher",
     version=version,
     description="Multiplatform hosts file manager",
     url='https://github.com/giuseppeiannelli/hostswitcher',
