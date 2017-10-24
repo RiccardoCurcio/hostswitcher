@@ -105,18 +105,3 @@ venv.bak/
 
 # Custom
 .vscode
-hostswitcher/__pycache__/*
-hostswitcher/cli/__pycache__/*
-hostswitcher/lib/__pycache__/*
-hostswitcher/lib/commands/__pycache__/*
-hostswitcher/utils/__pycache__/*
-hostswitcher/__pycache__/__main__.cpython-35.pyc
-hostswitcher/lib/commands/__pycache__/__init__.cpython-35.pyc
-hostswitcher/lib/__pycache__/__init__.cpython-35.pyc
-hostswitcher/cli/__pycache__/__init__.cpython-35.pyc
-hostswitcher/__pycache__/__main__.cpython-35.pyc
-hostswitcher/lib/commands/__pycache__/init.cpython-35.pyc
-hostswitcher/utils/__pycache__/__init__.cpython-35.pyc
-hostswitcher/utils/__pycache__/file.cpython-35.pyc
-hostswitcher/utils/__pycache__/logger.cpython-35.pyc
-hostswitcher/utils/__pycache__/text.cpython-35.pyc
