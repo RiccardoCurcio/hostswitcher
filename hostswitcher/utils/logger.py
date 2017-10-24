@@ -42,19 +42,19 @@ class logger(logging.Logger):
         return custom_logs_filename
 
     def debug(self, message):
-        self.log(logging.DEBUG, '%s: %s' % (bold('[DEBUG]', 'white'), message))
+        self.log(logging.DEBUG, '%s: %s' % (bold('[DEBUG]'), message))
 
     def info(self, message):
-        self.log(logging.INFO, '%s: %s' % (bold('[INFO]', 'yellow'), message))
+        self.log(logging.INFO, '%s: %s' % (bold('[INFO]'), message))
 
     def warning(self, message):
-        self.log(logging.WARNING, '%s: %s' % (bold('[WARNING]', 'orange'), message))
+        self.log(logging.WARNING, '%s: %s' % (bold('[WARNING]'), message))
 
     def error(self, message):
-        self.log(logging.ERROR, '%s: %s' % (bold('[ERROR]', 'red'), message))
+        self.log(logging.ERROR, '%s: %s' % (bold('[ERROR]'), message))
 
     def critical(self, message):
-        self.log(logging.CRITICAL, '%s: %s' % (bold('[CRITICAL]', 'red'), message))
+        self.log(logging.CRITICAL, '%s: %s' % (bold('[CRITICAL]'), message))
 
     def success(self, message):
-        self.log(logging.INFO, '%s: %s' % (bold('[SUCCESS]', 'green'), message))
+        self.log(logging.INFO, '%s: %s' % (bold('[SUCCESS]'), message))

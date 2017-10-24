@@ -39,7 +39,15 @@ class Hostswitcher(object):
 
         self.custom_hosts_path = os.path.join(homedir,'.hostswitcher/hosts_files')
         create_path(self.custom_hosts_path)
-    
+
+    def run(self):
+        lib = __import__('lib')
+        commands = getattr(lib, 'commands')
+        class_ = getattr(commands, '%s_%s' % (self.args['command'], 'command'))
+        
+        cmd = class_(self.args)
+        
+
 def main():
-    app = Hostswitcher()  
+    app = Hostswitcher()
     app.run()
