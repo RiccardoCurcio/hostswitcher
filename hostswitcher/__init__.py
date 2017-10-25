@@ -21,7 +21,7 @@ class Hostswitcher(object):
     
     def __init__(self):
         self.__print_title()
-        self.__custom_hosts_path()
+        self.__hosts_path()
         self.__start_cli()
 
     def __print_title(self):
@@ -33,21 +33,20 @@ class Hostswitcher(object):
         self.cli = cli()
         self.args = self.cli.args()
     
-    def __custom_hosts_path(self):
+    def __hosts_path(self):
 
         homedir = os.path.expanduser("~")
 
         if os_resolver() == 'Windows':
             homedir += "\\AppData\\Roaming"
 
-        self.custom_hosts_path = os.path.join(homedir,'.hostswitcher/hosts_files')
-        create_path(self.custom_hosts_path)
+        self.hosts_path = os.path.join(homedir,'.hostswitcher/hosts_files')
+        create_path(self.hosts_path)
 
     def run(self):
         import hostswitcher.lib.commands as commands
-        
         class_ = getattr(commands, '%s_%s' % (self.args['command'], 'command'))
-        
+        self.args['hosts_path'] = self.hosts_path
         cmd = class_(self.args)
 
 def main():
