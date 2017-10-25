@@ -21,6 +21,22 @@ class init_command(object):
         self.print_response()
 
     def copy_current_host_file(self):
+
+        def __overwrite():
+            qmsg = '%s %s' % ('exists, do you want overwrite it?',t.underline('(yes/no)'))
+            msg = '%s %s' % (t.bold(default), qmsg)
+            resp = input(msg)
+            if str(resp).lower() == 'yes':
+                shutil.copyfile(hosts, name)
+                msg = '%s %s' % (t.bold(default), 'overwrited!')
+                return self.__set_response(0, msg)
+            elif str(resp).lower() == 'no':
+                msg = msg = '%s %s' % (t.bold(default), 'not overwrited!')
+                return self.__set_response(0, msg)
+            else:
+                print('Invalid choice. Retry')
+                __overwrite()
+
         try:
             hosts = self.sys_hosts_path
             default = self.file_name
@@ -28,19 +44,10 @@ class init_command(object):
 
             if os.path.exists(name) is True:
                 while True:
-                    qmsg = '%s %s' % ('exists, do you want overwrite it?',t.underline('(yes/no)'))
-                    msg = '%s %s' % (t.bold(default), qmsg)
-                    resp = input(msg)
-                    if str(resp).lower() == 'yes':
-                        shutil.copyfile(hosts, name)
-                        msg = '%s %s' % (t.bold(default), 'overwrited!')
-                        return self.__set_response(0, msg)
-                    if str(resp).lower() == 'no':
-                        msg = msg = '%s %s' % (t.bold(default), 'not overwrited!')
-                        return self.__set_response(0, msg)
+                    return __overwrite()
             else:
                 shutil.copyfile(hosts, name)
-                msg = 'Init completed!'
+                msg = '%s created\nInit completed!' % t.bold(default)
                 return self.__set_response(0, msg)
         except Exception as e:
             self.log.warning(e)
