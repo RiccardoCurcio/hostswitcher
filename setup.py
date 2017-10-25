@@ -25,5 +25,14 @@ setup(
         'console_scripts': [
             'hostswitcher=hostswitcher:main',
         ]
-    }
+    },
+    classifiers=[
+        'Development Status :: 1 - Planning',
+        'Environment :: Console',
+        'Intended Audience :: System Administrators',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: GNU General Public License (GPL)',
+        'Programming Language :: Python :: 3',
+        'Operating System :: OS Independent'
+    ]
 )

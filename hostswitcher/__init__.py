@@ -26,6 +26,7 @@ class Hostswitcher(object):
 
     def __print_title(self):
         print(self.title)
+        print('Version: %s' % (__version__))
         print('OS: %s' % (os_resolver()), end='\n\n')
 
     def __start_cli(self):
