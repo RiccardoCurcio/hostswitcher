@@ -34,11 +34,10 @@ class Hostswitcher(object):
     
     def __custom_hosts_path(self):
 
-        try:
-            from win32com.shell import shellcon, shell            
-            homedir = shell.SHGetFolderPath(0, shellcon.CSIDL_LOCAL_APPDATA, 0, 0)
-        except ImportError:
-            homedir = os.path.expanduser("~")
+        homedir = os.path.expanduser("~")
+
+        if os_resolver() == 'Windows':
+            homedir += "\\AppData\\Roaming"
 
         self.custom_hosts_path = os.path.join(homedir,'.hostswitcher/hosts_files')
         create_path(self.custom_hosts_path)
