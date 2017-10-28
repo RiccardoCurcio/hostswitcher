@@ -9,7 +9,7 @@ class init_command(object):
         self.args = args
         self.log = logger()
         self.sys_hosts_path = hostswitcher.lib.hosts_path()
-        self.file_name = 'hosts.default'
+        self.file_name = 'default'
         self.copy_current_host_file()
         self.__print_response()
 

@@ -10,21 +10,23 @@ class create_command(object):
         self.args = args
         self.name = self.args['name'][0]
         self.log = logger()
-        self.create_new_file_by_current()
+        self.origin = self.args['from']
+
+        self.create_new_file()
         self.__print_response()
 
-    def create_new_file_by_current(self):
+    def create_new_file(self):
         self.response = dict(
             {
                 "newhosts": None,
-                "origin": None,
+                "origin": self.origin,
                 "status": 0,    
                 "msg": None,
                 "error": None
             }
         )
         try:
-            copy_result = self.__copy_current_hosts()
+            copy_result = self.__copy_hosts_file()
             hosts_file = os.path.join(self.args['hosts_path'],self.name)
             launch_editor(hosts_file)
         except Exception as e:
@@ -32,41 +34,48 @@ class create_command(object):
             error = '%s %s' % (t.bold(self.name),'not created!')
             return self.__set_response(status=-1,  error=error)
 
-
-    def __copy_current_hosts(self):
+    def __copy_hosts_file(self):
         def __overwrite():
             qmsg = '%s %s' % ('exists, do you want overwrite it?',t.underline('(yes/no)'))
             msg = '%s %s' % (t.bold(self.name), qmsg)
             resp = input(msg)
             if str(resp).lower() == 'yes':
-                shutil.copyfile(current_hosts, new_hosts)
-                self.__set_title(new_hosts)
-                msg = '%s %s' % (t.bold(self.name), 'overwrited!')
-                self.__set_response(new_hosts, current_hosts, msg=msg)
+                try:
+                    shutil.copyfile(origin_hosts_file, new_hosts_file)
+                    self.__set_title(new_hosts_file)
+                    msg = '%s %s' % (t.bold(self.name), 'overwrited!')
+                    self.__set_response(new_hosts_file, origin_hosts_file, msg=msg)
+                except Exception as e:
+                    msg = '%s %s' % (t.bold(self.name), 'not overwrited!')
+                    self.__set_response(new_hosts_file, origin_hosts_file, msg=msg)
             elif str(resp).lower() == 'no':
                 msg = '%s %s' % (t.bold(self.name), 'not overwrited!')
-                self.__set_response(new_hosts, current_hosts, msg=msg)
+                self.__set_response(new_hosts_file, origin_hosts_file, msg=msg)
             else:
                 print('Invalid choice. Retry')
                 __overwrite()
                 
-        current_hosts = hostswitcher.lib.hosts_path()
-        new_hosts = os.path.join(self.args['hosts_path'],self.args['name'][0])
+        if self.origin != None:
+            origin_hosts_file = os.path.join(self.args['hosts_path'],self.origin)
+        else:
+            origin_hosts_file = hostswitcher.lib.hosts_path()
+        new_hosts_file = os.path.join(self.args['hosts_path'],self.args['name'][0])
+
         try:
-            if os.path.exists(new_hosts) is True:
+            if os.path.exists(new_hosts_file) is True:
                 return __overwrite()
             else:
                 shutil.copyfile(
-                    current_hosts,
-                    new_hosts
+                    origin_hosts_file,
+                    new_hosts_file
                 )
                 msg = '%s %s' % (t.bold(self.name), 'created!')
-                self.__set_title(new_hosts)
-                self.__set_response(new_hosts, current_hosts, msg=msg)
+                self.__set_title(new_hosts_file)
+                self.__set_response(new_hosts_file, origin_hosts_file, msg=msg)
         except Exception as e:
             self.log.warning(e)
             error = '%s %s' % (t.bold(self.name), 'not created!')
-            self.__set_response(new_hosts, current_hosts, -1, errror=error)
+            self.__set_response(new_hosts_file, origin_hosts_file, -1, errror=error)
 
     def __set_title(self, hosts_file):
 

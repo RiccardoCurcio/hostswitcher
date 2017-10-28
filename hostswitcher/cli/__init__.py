@@ -14,12 +14,8 @@ class cli(object):
         action_subparser = main_parser.add_subparsers(dest='command')
 
         create_parser = action_subparser.add_parser('create',
-            description='Create new hosts file by current hosts file', 
-            help='Create new hosts file by current hosts file', 
-            parents=[parent_parser])
-        createby_parser = action_subparser.add_parser('createby', 
-            description='Create new hosts file from selected file', 
-            help='Create new hosts file from selected file', 
+            description='Create new hosts file', 
+            help='Create new hosts file', 
             parents=[parent_parser])
         edit_parser = action_subparser.add_parser('edit', 
             description='Edit hosts file', 
@@ -49,21 +45,14 @@ class cli(object):
             description='show list hosts file', 
             help='show list hosts file', 
             parents=[parent_parser])
-        
-
+    
         ## Setup options for create
         create_parser._positionals.title='Args'
         create_parser._optionals.title=None
         create_parser.add_argument('name', nargs=1, default=str(),
                                     action='store', help = 'New hosts file name')
-
-        ## Setup options for createby
-        createby_parser._positionals.title='Args'
-        createby_parser._optionals.title=None
-        createby_parser.add_argument('origin', nargs=1, default=str(),
-                                    action='store', help = 'Origin hosts file name')
-        createby_parser.add_argument('name', nargs=1, default=str(),
-                                    action='store', help = 'New hosts file name')
+        create_parser.add_argument('--from', metavar='ORIGIN', nargs='?', default=None,
+                            action='store', help = 'Origin hosts file name')                    
 
         ## Setup options for edit
         edit_parser._positionals.title='Args'
