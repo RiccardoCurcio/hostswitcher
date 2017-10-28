@@ -11,7 +11,7 @@ class init_command(object):
         self.sys_hosts_path = hostswitcher.lib.hosts_path()
         self.file_name = 'hosts.default'
         self.copy_current_host_file()
-        self.print_response()
+        self.__print_response()
 
     def copy_current_host_file(self):
 
@@ -65,7 +65,7 @@ class init_command(object):
         )
         return self.response
 
-    def print_response(self):
+    def __print_response(self):
         if self.response['status'] != 0:
             print(self.response['error'])
             raise SystemExit(self.response['status'])
