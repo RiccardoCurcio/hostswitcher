@@ -10,13 +10,6 @@ class init_command(object):
         self.log = logger()
         self.sys_hosts_path = hostswitcher.lib.hosts_path()
         self.file_name = 'hosts.default'
-        self.response = dict(
-            {
-                "status": 0,
-                "msg": None,
-                "error": None
-            }
-        )
         self.copy_current_host_file()
         self.print_response()
 
@@ -27,7 +20,7 @@ class init_command(object):
             msg = '%s %s' % (t.bold(default), qmsg)
             resp = input(msg)
             if str(resp).lower() == 'yes':
-                shutil.copyfile(hosts, name)
+                shutil.copyfile(sys_hosts, hosts_filename)
                 msg = '%s %s' % (t.bold(default), 'overwrited!')
                 return self.__set_response(0, msg)
             elif str(resp).lower() == 'no':
@@ -37,16 +30,24 @@ class init_command(object):
                 print('Invalid choice. Retry')
                 __overwrite()
 
-        try:
-            hosts = self.sys_hosts_path
-            default = self.file_name
-            name = os.path.join(self.args['hosts_path'],default)
+        self.response = dict(
+            {
+                "status": 0,
+                "msg": None,
+                "error": None
+            }
+        )
 
-            if os.path.exists(name) is True:
+        try:
+            sys_hosts = self.sys_hosts_path
+            default = self.file_name
+            hosts_filename = os.path.join(self.args['hosts_path'],default)
+
+            if os.path.exists(hosts_filename) is True:
                 while True:
                     return __overwrite()
             else:
-                shutil.copyfile(hosts, name)
+                shutil.copyfile(sys_hosts, hosts_filename)
                 msg = '%s created\nInit completed!' % t.bold(default)
                 return self.__set_response(0, msg)
         except Exception as e:
