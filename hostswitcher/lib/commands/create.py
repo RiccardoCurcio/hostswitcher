@@ -29,8 +29,8 @@ class create_command(object):
             launch_editor(hosts_file)
         except Exception as e:
             self.log.warning(e)
-            msg = '%s %s' % (t.bold(self.name),'not created!')
-            return self.__set_return(-1, msg, e)
+            error = '%s %s' % (t.bold(self.name),'not created!')
+            return self.__set_response(status=-1,  error=error)
 
 
     def __copy_current_hosts(self):
@@ -40,6 +40,7 @@ class create_command(object):
             resp = input(msg)
             if str(resp).lower() == 'yes':
                 shutil.copyfile(current_hosts, new_hosts)
+                self.__set_title(new_hosts)
                 msg = '%s %s' % (t.bold(self.name), 'overwrited!')
                 self.__set_response(new_hosts, current_hosts, msg=msg)
             elif str(resp).lower() == 'no':
@@ -54,40 +55,41 @@ class create_command(object):
         try:
             if os.path.exists(new_hosts) is True:
                 return __overwrite()
-                # self.__set_title(new_name, name)
             else:
                 shutil.copyfile(
                     current_hosts,
                     new_hosts
                 )
                 msg = '%s %s' % (t.bold(self.name), 'created!')
-                # self.__set_title(new_name, name)
+                self.__set_title(new_hosts)
                 self.__set_response(new_hosts, current_hosts, msg=msg)
         except Exception as e:
             self.log.warning(e)
             error = '%s %s' % (t.bold(self.name), 'not created!')
             self.__set_response(new_hosts, current_hosts, -1, errror=error)
 
-    def __set_title(self, file_path, name):
-        my_file_r = open(
-            file_path,
-            'r'
-        )
-        copy_list = list()
-        for line in my_file_r:
-            copy_list.append(line)
-        my_file_r.close()
+    def __set_title(self, hosts_file):
 
-        my_file_w = open(
-            file_path,
-            'w'
-        )
-        my_file_w.seek(0)
-        my_file_w.write('#' + name.upper() + '\n')
-        for line in copy_list:
-            my_file_w.write(line)
+        name = os.path.basename(hosts_file)
 
-        my_file_w.close()
+        try:
+            with open(hosts_file, 'r') as f:
+                hosts_file_lines = f.readlines()
+                f.close()
+            if hosts_file_lines[0].startswith('#HOSTSWITCHER name:'):
+                hosts_file_lines.pop(0)
+        except OSError as e:
+            self.log.error(e)
+        
+        hosts_file_data = ['#HOSTSWITCHER name: %s\n\n' % name ]
+        hosts_file_data.extend(hosts_file_lines)
+
+        try:
+            with open(hosts_file, 'w') as f:
+                f.writelines(hosts_file_data)
+        except OSError as e:
+            self.log.error(e)
+
 
     def __set_response(self, newhosts=None, origin=None, status=0, msg=None, error=None ):
         try:
