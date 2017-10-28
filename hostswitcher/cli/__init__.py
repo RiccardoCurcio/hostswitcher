@@ -57,7 +57,7 @@ class cli(object):
         ## Setup options for edit
         edit_parser._positionals.title='Args'
         edit_parser._optionals.title=None
-        edit_parser.add_argument('name', nargs='?', default='hosts.default',
+        edit_parser.add_argument('name', nargs='?', default='default',
                                     action='store', help = 'Edit selected hosts file. [default: %(default)s]')
 
         ## Setup options for init
@@ -77,19 +77,19 @@ class cli(object):
         ## Setup options for remove
         remove_parser._positionals.title='Args'
         remove_parser._optionals.title=None
-        remove_parser.add_argument('name', nargs=1, default='hosts.default',
+        remove_parser.add_argument('name', nargs=1, default='default',
                                     action='store', help = 'Remove selected hosts file')
 
         ## Setup options for set
         set_parser._positionals.title='Args'
         set_parser._optionals.title=None
-        set_parser.add_argument('name', nargs=1, default='hosts.default',
+        set_parser.add_argument('name', nargs=1, default='default',
                                     action='store', help = 'Set selected hosts file')
 
         ## Setup options for show
         show_parser._positionals.title='Args'
         show_parser._optionals.title=None
-        show_parser.add_argument('name', nargs='?', default='hosts.default',
+        show_parser.add_argument('name', nargs='?', default='default',
                                     action='store', help = 'Show selected hosts file. [default: %(default)s]')
 
         ## Setup options for showlist
