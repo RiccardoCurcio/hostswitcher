@@ -1,6 +1,5 @@
 import os
 
-from hostswitcher.lib import commands
 from hostswitcher.utils import *
 from hostswitcher.utils.logger import logger
 
