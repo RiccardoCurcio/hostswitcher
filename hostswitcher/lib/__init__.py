@@ -19,9 +19,9 @@ def change_hosts(filename):
             else:
                 logger().warning('You don\'t have root privileges.')
                 proc = subprocess.call(['sudo', 'cp', filename,  hosts_path()])
-            if proc != 0:
-                raise SystemExit('Can\'t access to system hosts file.\nExit')
         elif os_resolver() == 'Windows':
-            os.system("xcopy \"" + filename + "\"  \"" + hosts_path() + "\" /F /Y" )
+            proc = os.system("xcopy \"" + filename + "\"  \"" + hosts_path() + "\" /F /Y" )
+        if proc != 0:
+            raise SystemExit('Can\'t access to system hosts file.\nExit')
     except OSError as e:
         logger().error(e)
