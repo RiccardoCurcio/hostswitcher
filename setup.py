@@ -17,7 +17,7 @@ setup(
     author = "Riccardo Curcio, Angelo Landino, Giuseppe Iannelli",
     author_email = "curcioriccardo@gmail.com,angelolandino@hotmail.it,me@giuseppeiannelli.it",
     description="Multiplatform hosts file manager",
-    url='https://github.com/giuseppeiannelli/hostswitcher',
+    url='https://github.com/riccardocurcio/hostswitcher',
     packages=find_packages(),
     install_requires=requirements,
     py_modules=['hostswitcher'],

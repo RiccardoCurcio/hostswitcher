@@ -7,7 +7,7 @@ def create_path(path):
                 if not os.path.exists(path):
                     os.makedirs(path)
             except OSError as e:
-                print(e)
+                self.log.error(e)
 
 def create_file(filename):
 
@@ -15,8 +15,8 @@ def create_file(filename):
             try:
                 create_path(os.path.dirname(filename))
             except OSError as e:
-                print(e)
+                self.log.error(e)
         try:
             open(filename,'w').close()
         except OSError as e:
-            print(e)
+            self.log.error(e)

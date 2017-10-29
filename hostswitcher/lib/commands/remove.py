@@ -45,7 +45,7 @@ class remove(object):
             try:
                 __ask_remove()
             except Exception as e:
-                print(e)
+                self.log.error(e)
         else:
             error = 'Nothing to remove. File %s not exists' % t.bold(self.name)
             self.__set_response(-1, error=error)
@@ -60,7 +60,7 @@ class remove(object):
                 }
             )
         except Exception as e:
-            print(e)
+            self.log.error(e)
         return self.response
 
     def __print_response(self):

@@ -48,7 +48,7 @@ class edit(object):
                 }
             )
         except Exception as e:
-            print(e)
+            self.log.error(e)
         return self.response
 
     def __print_response(self):

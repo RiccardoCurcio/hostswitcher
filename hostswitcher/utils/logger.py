@@ -23,8 +23,8 @@ class logger(logging.Logger):
 
         formatter=logging.Formatter("%(asctime)s %(message)s")
 
-        # handler = logging.StreamHandler()
-        handler = logging.handlers.RotatingFileHandler(self.__custom_logs_filename(), 'a', maxBytes=1024)
+        handler = logging.StreamHandler()
+        # handler = logging.handlers.RotatingFileHandler(self.__custom_logs_filename(), 'a', maxBytes=1024)
         handler.setFormatter(formatter)
         self.setLevel(self.level)
         self.addHandler(handler)

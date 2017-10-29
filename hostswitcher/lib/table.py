@@ -30,6 +30,5 @@ class table:
                 print(string_row)
                 __print_separator_line()
 
-            # print("\n")
         except Exception as e:
-            print(e)
+            self.log.error(e)
