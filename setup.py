@@ -8,7 +8,8 @@ version = None
 exec(open('hostswitcher/version.py').read())
 
 requirements = [
-    'termcolor'
+    'termcolor',
+    'colorama'
 ]
 
 setup(
