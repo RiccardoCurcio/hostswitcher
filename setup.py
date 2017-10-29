@@ -27,7 +27,7 @@ setup(
         ]
     },
     classifiers=[
-        'Development Status :: 1 - Planning',
+        'Development Status :: 3 - Alpha',
         'Environment :: Console',
         'Intended Audience :: System Administrators',
         'Intended Audience :: Developers',
