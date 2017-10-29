@@ -1,4 +1,4 @@
-import os
+import os, filecmp
 import hostswitcher.lib
 from hostswitcher.utils.logger import logger
 import hostswitcher.utils.text as t
@@ -16,7 +16,7 @@ class remove(object):
     def __remove_hosts_file(self):
 
         def __ask_remove():
-            question = '%s %s %s %s'  % ('Do you want remove',t.bold(self.name),'?',t.underline('(yes/no)'))
+            question = '%s %s%s%s'  % ('Do you want remove',t.bold(self.name),'?',t.underline('(yes/no)'))
             print(question)
             choice = input()
             if str(choice).lower() == 'yes':
@@ -43,10 +43,14 @@ class remove(object):
 
         hosts_file = os.path.join(self.args['hosts_path'], self.name)
         if os.path.exists(hosts_file):
-            try:
-                __ask_remove()
-            except Exception as e:
-                self.log.error(e)
+            if filecmp.cmp(hosts_file, hostswitcher.lib.hosts_path(), shallow=True) is False:
+                try:
+                    __ask_remove()
+                except Exception as e:
+                    self.log.error(e)
+            else:
+                error = 'You can\'t remove %s. Hosts file in use' % t.bold(self.name)
+                self.__set_response(-1, error=error)
         else:
             error = 'Nothing to remove. File %s not exists' % t.bold(self.name)
             self.__set_response(-1, error=error)
