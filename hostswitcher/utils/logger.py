@@ -21,7 +21,7 @@ class logger(logging.Logger):
         except Exception as e:
             logging.error(e)
 
-        formatter=logging.Formatter("%(asctime)s %(message)s")
+        formatter=logging.Formatter("%(message)s")
 
         handler = logging.StreamHandler()
         # handler = logging.handlers.RotatingFileHandler(self.__custom_logs_filename(), 'a', maxBytes=1024)

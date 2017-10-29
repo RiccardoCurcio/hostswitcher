@@ -21,6 +21,7 @@ setup(
     url='https://github.com/riccardocurcio/hostswitcher',
     packages=find_packages(),
     install_requires=requirements,
+    python_requires='>=3',
     py_modules=['hostswitcher'],
     entry_points={
         'console_scripts': [
@@ -37,3 +38,9 @@ setup(
         'Operating System :: OS Independent'
     ]
 )
+
+
+## TO PUSH ON PYPI
+#python3 setup.py build sdist upload --sign
+#python3 setup.py bdist_wheel --python-tag 3 upload --sign
+#python3 setup.py build bdist_egg upload --sign

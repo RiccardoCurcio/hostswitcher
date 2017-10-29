@@ -1,21 +1,22 @@
-** HOST SWITCHER **
+# Hostswitcher
 
-h1> To develop
-link the package locally
+## Introduction
 
-unix:
-python3 setup.py develop
+Hostswitcher is a manager for your hosts file
 
-windows:
-python setup.py develop
+## Feature list
 
-to run package
+- Create new hosts file
+- Edit hosts file
+- List hosts file
+- Combine two or more existent files
+- Remove hosts file
+- Set hosts file
+- Show hosts file
 
-unix:
-hostswitcher
+## Installation
 
-windows (without pip):
-python hostswitcher
+pip3 install hostswitcher
 
 
 
