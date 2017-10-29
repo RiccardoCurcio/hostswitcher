@@ -29,7 +29,8 @@ class combine(object):
             def __overwrite():
                 qmsg = '%s %s' % ('exists, do you want overwrite it?',t.underline('(yes/no)'))
                 msg = '%s %s' % (t.bold(self.name), qmsg)
-                resp = input(msg)
+                print(msg)
+                resp = input()
                 if str(resp).lower() == 'yes':
                     try:
                         with open(new_hosts_file, 'w') as f:

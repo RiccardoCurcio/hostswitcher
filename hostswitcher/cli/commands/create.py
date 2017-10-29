@@ -38,7 +38,8 @@ class create(object):
         def __overwrite():
             qmsg = '%s %s' % ('exists, do you want overwrite it?',t.underline('(yes/no)'))
             msg = '%s %s' % (t.bold(self.name), qmsg)
-            resp = input(msg)
+            print(msg)
+            resp = input()
             if str(resp).lower() == 'yes':
                 try:
                     shutil.copyfile(origin_hosts_file, new_hosts_file)

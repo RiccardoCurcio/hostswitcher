@@ -18,7 +18,8 @@ class init(object):
         def __overwrite():
             question = '%s %s' % ('exists, do you want overwrite it?',t.underline('(yes/no)'))
             msg = '%s %s' % (t.bold(default), question)
-            choice = input(msg)
+            print(msg)
+            choice = input()
             if str(choice).lower() == 'yes':
                 shutil.copyfile(sys_hosts, hosts_filename)
                 msg = '%s %s' % (t.bold(default), 'overwrited!')

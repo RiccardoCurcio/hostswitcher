@@ -1,4 +1,9 @@
+from colorama import init
 from termcolor import colored
+init()
+
+#from colorama import Fore, Back, Style
+#print(colored('Hello, World!', 'green', 'on_red'))
 
 all = ['bold', 'underline']
 

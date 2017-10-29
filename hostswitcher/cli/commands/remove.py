@@ -17,7 +17,8 @@ class remove(object):
 
         def __ask_remove():
             question = '%s %s %s %s'  % ('Do you want remove',t.bold(self.name),'?',t.underline('(yes/no)'))
-            choice = input(question)
+            print(question)
+            choice = input()
             if str(choice).lower() == 'yes':
                 try:
                     os.remove(hosts_file)
