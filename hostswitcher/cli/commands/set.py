@@ -33,10 +33,10 @@ class set(object):
                 return self.__set_response(0, msg)
             else:
                 error = '%s %s' % (t.bold(self.name), 'not exists!')
-                self.log.warning(error)
+                # self.log.warning(error)
                 return self.__set_response(-1,  error=error)
         except Exception as e:
-            self.log.warning(e)
+            # self.log.warning(e)
             error = '%s %s' % (t.bold(self.name), 'not set!')
             return self.__set_response(-1,  error=error)
 

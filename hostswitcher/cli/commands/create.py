@@ -58,8 +58,12 @@ class create(object):
                 
         if self.origin != None:
             origin_hosts_file = os.path.join(self.args['hosts_path'],self.origin)
+            if not os.path.exists(origin_hosts_file):
+                error = 'Not found origin %s\nExit' % (t.bold(self.origin))
+                raise SystemExit(error)
         else:
             origin_hosts_file = hostswitcher.lib.hosts_path()
+        
         new_hosts_file = os.path.join(self.args['hosts_path'],self.args['name'][0])
 
         try:
@@ -74,9 +78,9 @@ class create(object):
                 self.__set_title(new_hosts_file)
                 self.__set_response(new_hosts_file, origin_hosts_file, msg=msg)
         except Exception as e:
-            self.log.warning(e)
+            # self.log.warning(e)
             error = '%s %s' % (t.bold(self.name), 'not created!')
-            self.__set_response(new_hosts_file, origin_hosts_file, -1, errror=error)
+            self.__set_response(new_hosts_file, origin_hosts_file, -1, error=error)
 
     def __set_title(self, hosts_file):
 

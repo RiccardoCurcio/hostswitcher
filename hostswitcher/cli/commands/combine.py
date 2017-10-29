@@ -65,27 +65,32 @@ class combine(object):
         self.response= {
             "newhosts": self.name,
             "origin": self.origin,
+            "missing_origin": list() ,
             "status": 0,
             "msg": None,
             "error": None
         }
         hosts = list()
         for file in self.origin:
-            hosts.extend(self.__read_host_file(os.path.join(self.args['hosts_path'],file)))
+            hosts.extend(self.__read_host_file(file))
         hosts = __remove_duplicate(hosts)
 
         new_hosts_file = os.path.join(self.args['hosts_path'], self.name)
 
-        __write()
+        if self.response == 0:
+           __write()
 
     def __read_host_file(self, hostsfile):
         buffer = list()
         try:
-            with open(hostsfile, 'r') as f:
+            with open(os.join(self.args['hosts_path'], hostsfile), 'r') as f:
                 buffer = f.readlines()
                 f.close()
         except Exception as e:
-            self.log.warning(e)
+            self.response['missing_origin'].append(hostsfile)
+            error = 'Not found %s\nExit'  % (t.bold(','.join(self.response['missing_origin'])))
+            self.__set_response(status=-1, error=error)
+            return list()
     
         hostsfile_data=list()
 
@@ -111,7 +116,7 @@ class combine(object):
         return self.response
 
     def __print_response(self):
-        if self.response['status'] != 0:
+        if self.response['status'] != 0:            
             print(self.response['error'])
             raise SystemExit(self.response['status'])
         else:

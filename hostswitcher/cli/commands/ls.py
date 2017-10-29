@@ -29,6 +29,10 @@ class ls(object):
             for file in system_files_to_exclude:
                 if os.path.exists(file):
                     list_of_hostsfile.remove(file)
+            if len(list_of_hostsfile) == 0:
+                print('Before list hosts file, you must run init command. \
+                \nView help for more information')
+                raise SystemExit()
             return self.__set_response(list_of_hostsfile)
         except Exception as e:
             self.log.warning(e)
