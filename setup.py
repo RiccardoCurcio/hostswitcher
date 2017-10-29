@@ -21,6 +21,7 @@ setup(
     url='https://github.com/riccardocurcio/hostswitcher',
     packages=find_packages(),
     install_requires=requirements,
+    python_requires='>=3',
     py_modules=['hostswitcher'],
     entry_points={
         'console_scripts': [
