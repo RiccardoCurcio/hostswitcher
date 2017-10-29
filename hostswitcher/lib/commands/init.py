@@ -3,7 +3,7 @@ import hostswitcher.lib
 from hostswitcher.utils.logger import logger
 import hostswitcher.utils.text as t
 
-class init_command(object):
+class init(object):
 
     def __init__(self, args):
         self.args = args
@@ -16,14 +16,14 @@ class init_command(object):
     def copy_current_host_file(self):
 
         def __overwrite():
-            qmsg = '%s %s' % ('exists, do you want overwrite it?',t.underline('(yes/no)'))
-            msg = '%s %s' % (t.bold(default), qmsg)
-            resp = input(msg)
-            if str(resp).lower() == 'yes':
+            question = '%s %s' % ('exists, do you want overwrite it?',t.underline('(yes/no)'))
+            msg = '%s %s' % (t.bold(default), question)
+            choice = input(msg)
+            if str(choice).lower() == 'yes':
                 shutil.copyfile(sys_hosts, hosts_filename)
                 msg = '%s %s' % (t.bold(default), 'overwrited!')
                 return self.__set_response(0, msg)
-            elif str(resp).lower() == 'no':
+            elif str(choice).lower() == 'no':
                 msg = msg = '%s %s' % (t.bold(default), 'not overwrited!')
                 return self.__set_response(0, msg)
             else:

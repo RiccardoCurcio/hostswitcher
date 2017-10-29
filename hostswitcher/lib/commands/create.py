@@ -4,7 +4,7 @@ from hostswitcher.utils.logger import logger
 from hostswitcher.utils import launch_editor
 import hostswitcher.utils.text as t
 
-class create_command(object):
+class create(object):
 
     def __init__(self, args):
         self.args = args
@@ -90,7 +90,7 @@ class create_command(object):
         except OSError as e:
             self.log.error(e)
         
-        hosts_file_data = ['#HOSTSWITCHER name: %s\n\n' % name ]
+        hosts_file_data = ['#HOSTSWITCHER name: %s\n' % name ]
         hosts_file_data.extend(hosts_file_lines)
 
         try:

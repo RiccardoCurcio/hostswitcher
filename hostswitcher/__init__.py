@@ -45,7 +45,7 @@ class Hostswitcher(object):
 
     def run(self):
         import hostswitcher.lib.commands as commands
-        class_ = getattr(commands, '%s_%s' % (self.args['command'], 'command'))
+        class_ = getattr(commands, self.args['command'])
         self.args['hosts_path'] = self.hosts_path
         cmd = class_(self.args)
 

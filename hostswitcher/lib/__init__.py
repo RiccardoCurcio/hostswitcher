@@ -15,8 +15,8 @@ def hosts_path():
 def change_hosts(filename):
     try:
         if os_resolver() != 'Windows':
-            os.system("sudo cp " + os.path.dirname(filename) + " " + hosts_path())
+            os.system("cp " + filename + " " + hosts_path())
         else:
-            os.system("xcopy \"" + os.path.dirname(filename) + "\"  \"" + hosts_path() + "\" /F /Y" )
+            os.system("xcopy \"" + filename + "\"  \"" + hosts_path() + "\" /F /Y" )
     except OSError as e:
         logger().error(e)

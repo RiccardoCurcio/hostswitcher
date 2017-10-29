@@ -25,9 +25,13 @@ class cli(object):
             description = 'Set current hosts file default hosts file', 
             help = 'Set current hosts file default hosts file',
             parents=[parent_parser])
-        merge_parser = action_subparser.add_parser('merge', 
-            description='Merge two exist files', 
-            help='Merge two exist files', 
+        ls_parser = action_subparser.add_parser('ls', 
+            description='List hosts file', 
+            help='List hosts file', 
+            parents=[parent_parser])
+        combine_parser = action_subparser.add_parser('combine', 
+            description='Combine two or more existent files', 
+            help='Combine two or more existent files', 
             parents=[parent_parser])
         remove_parser = action_subparser.add_parser('remove', 
             description='Remove hosts file', 
@@ -41,15 +45,12 @@ class cli(object):
             description='Show hosts file', 
             help='Show hosts file', 
             parents=[parent_parser])
-        showlist_parser = action_subparser.add_parser('showlist', 
-            description='show list hosts file', 
-            help='show list hosts file', 
-            parents=[parent_parser])
+       
     
         ## Setup options for create
         create_parser._positionals.title='Args'
         create_parser._optionals.title=None
-        create_parser.add_argument('name', nargs=1, default=str(),
+        create_parser.add_argument('name', nargs=1,
                                     action='store', help = 'New hosts file name')
         create_parser.add_argument('--from', metavar='ORIGIN', nargs='?', default=None,
                             action='store', help = 'Origin hosts file name')                    
@@ -64,27 +65,25 @@ class cli(object):
         init_parser._positionals.title=None
         init_parser._optionals.title='Help'
 
-        ## Setup options for merge
-        merge_parser._positionals.title='Args'
-        merge_parser._optionals.title=None
-        merge_parser.add_argument('1st_origin', nargs=1, default=str(),
-                                    action='store', help = 'First origin hosts file name')
-        merge_parser.add_argument('2nd_origin', nargs=1, default=str(),
-                                    action='store', help = 'Second origin hosts file name')
-        merge_parser.add_argument('name', nargs=1, default=str(),
+        ## Setup options for combine
+        combine_parser._positionals.title='Args'
+        combine_parser._optionals.title=None
+        combine_parser.add_argument('--from', metavar="NAME", nargs='+',
+                                    action='store', help = 'Origin hosts files name', required=True)
+        combine_parser.add_argument('name', nargs=1,
                                     action='store', help = 'New hosts file name')
 
         ## Setup options for remove
         remove_parser._positionals.title='Args'
         remove_parser._optionals.title=None
-        remove_parser.add_argument('name', nargs=1, default='default',
-                                    action='store', help = 'Remove selected hosts file')
+        remove_parser.add_argument('name', nargs=1,
+                                    action='store', help = 'Remove selected hosts file.')
 
         ## Setup options for set
         set_parser._positionals.title='Args'
         set_parser._optionals.title=None
-        set_parser.add_argument('name', nargs=1, default='default',
-                                    action='store', help = 'Set selected hosts file')
+        set_parser.add_argument('name', nargs='?', default='default',
+                                    action='store', help = 'Set selected hosts file. [default: %(default)s]')
 
         ## Setup options for show
         show_parser._positionals.title='Args'
@@ -93,8 +92,8 @@ class cli(object):
                                     action='store', help = 'Show selected hosts file. [default: %(default)s]')
 
         ## Setup options for showlist
-        showlist_parser._positionals.title='Args'
-        showlist_parser._optionals.title=None
+        ls_parser._positionals.title='Args'
+        ls_parser._optionals.title=None
 
         self.__args = vars(main_parser.parse_args())    
 

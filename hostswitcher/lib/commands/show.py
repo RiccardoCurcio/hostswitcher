@@ -1,8 +1,10 @@
 import os
 import hostswitcher.lib
 from hostswitcher.utils.logger import logger
+import hostswitcher.utils.text as t
 
-class show_command(object):
+
+class show(object):
 
     def __init__(self, args):
         self.args = args
@@ -28,7 +30,7 @@ class show_command(object):
                 msg = 'Enjoy hosts!'
                 self.__set_response(0,msg)
         except OSError as e:
-            error='Can not read hosts file %s' % self.name
+            error='Can\'t read hosts file %s' % t.bold(self.name)
             self.__set_response(-1, None, error)
 
     def __set_response(self, status=0, msg=None, error=None):
