@@ -52,6 +52,7 @@ class create(object):
             elif str(resp).lower() == 'no':
                 msg = '%s %s' % (t.bold(self.name), 'not overwrited!')
                 self.__set_response(new_hosts_file, origin_hosts_file, msg=msg)
+                raise SystemExit(msg)
             else:
                 print('Invalid choice. Retry')
                 __overwrite()

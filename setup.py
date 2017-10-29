@@ -41,6 +41,6 @@ setup(
 
 
 ## TO PUSH ON PYPI
-#python3 setup.py build sdist upload --sign
-#python3 setup.py bdist_wheel --python-tag 3 upload --sign
-#python3 setup.py build bdist_egg upload --sign
+# python3 setup.py build sdist upload --sign
+# python3 setup.py bdist_wheel --python-tag 3 upload --sign
+# python3 setup.py build bdist_egg upload --sign
