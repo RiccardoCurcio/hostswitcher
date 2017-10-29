@@ -27,7 +27,8 @@ class ls(object):
             list_of_hostsfile = os.listdir(str(self.hosts_path))
             system_files_to_exclude=['.DS_Store']
             for file in system_files_to_exclude:
-                list_of_hostsfile.remove(file)
+                if os.path.exists(file):
+                    list_of_hostsfile.remove(file)
             return self.__set_response(list_of_hostsfile)
         except Exception as e:
             self.log.warning(e)
