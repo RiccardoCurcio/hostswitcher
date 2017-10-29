@@ -22,11 +22,14 @@ class show(object):
                 "error": None
             }
         )
-
+        
         try:
             with open(os.path.join(self.args['hosts_path'], self.name)) as f:
+                print('You are viewing hosts file %s' % t.bold(self.name))
+                print('*' * 80)
                 print(f.read())
                 f.close()
+                print('*' * 80)
                 msg = 'Enjoy hosts!'
                 self.__set_response(0,msg)
         except OSError as e:
