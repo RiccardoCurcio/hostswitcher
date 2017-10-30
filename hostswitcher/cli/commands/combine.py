@@ -80,30 +80,31 @@ class combine(object):
 
         new_hosts_file = os.path.join(self.args['hosts_path'], self.name)
 
-        if self.response == 0:
-           __write()
+        if self.response["status"] == 0:
+            __write()
 
     def __read_host_file(self, hostsfile):
         buffer = list()
         try:
-            with open(os.join(self.args['hosts_path'], hostsfile), 'r') as f:
+            path = os.path.join(self.args['hosts_path'], hostsfile)
+            with open(path, 'r') as f:
                 buffer = f.readlines()
                 f.close()
-        except Exception as e:
+        except Exception:
             self.response['missing_origin'].append(hostsfile)
             error = 'Not found %s\nExit'  % (t.bold(','.join(self.response['missing_origin'])))
             self.__set_response(status=-1, error=error)
             return list()
 
-        hostsfile_data=list()
+        hostsfile_data = list()
 
         for line in buffer:
-            if (not line.startswith('#')) and (not line.startswith('\n')) :
+            if not line.startswith('\n'):
                 hostsfile_data.append(line)
 
         return hostsfile_data
 
-    def __set_response(self, newhosts=None, origin=None, status=0, msg=None, error=None ):
+    def __set_response(self, newhosts=None, origin=None, status=0, msg=None, error=None):
         try:
             self.response.update(
                 {
