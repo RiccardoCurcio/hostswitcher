@@ -2,8 +2,8 @@ import argparse, os, sys
 
 class cli(object):
     def __init__(self):
-        self.__parse_args()          
-    
+        self.__parse_args()
+
     def __parse_args(self):
         parent_parser=argparse.ArgumentParser(add_help=False)
 
@@ -14,46 +14,46 @@ class cli(object):
         action_subparser = main_parser.add_subparsers(dest='command')
 
         create_parser = action_subparser.add_parser('create',
-            description='Create new hosts file', 
-            help='Create new hosts file', 
+            description='Create new hosts file',
+            help='Create new hosts file',
             parents=[parent_parser])
-        edit_parser = action_subparser.add_parser('edit', 
-            description='Edit hosts file', 
-            help='Edit hosts file', 
+        edit_parser = action_subparser.add_parser('edit',
+            description='Edit hosts file',
+            help='Edit hosts file',
             parents=[parent_parser])
-        init_parser = action_subparser.add_parser('init', 
-            description = 'Set current hosts file default hosts file', 
+        init_parser = action_subparser.add_parser('init',
+            description = 'Set current hosts file default hosts file',
             help = 'Set current hosts file default hosts file',
             parents=[parent_parser])
-        ls_parser = action_subparser.add_parser('ls', 
-            description='List hosts file', 
-            help='List hosts file', 
+        ls_parser = action_subparser.add_parser('ls',
+            description='List hosts file',
+            help='List hosts file',
             parents=[parent_parser])
-        combine_parser = action_subparser.add_parser('combine', 
-            description='Combine two or more existent files', 
-            help='Combine two or more existent files', 
+        combine_parser = action_subparser.add_parser('combine',
+            description='Combine two or more existent files',
+            help='Combine two or more existent files',
             parents=[parent_parser])
-        remove_parser = action_subparser.add_parser('remove', 
-            description='Remove hosts file', 
-            help='Remove hosts file', 
+        remove_parser = action_subparser.add_parser('remove',
+            description='Remove hosts file',
+            help='Remove hosts file',
             parents=[parent_parser])
-        set_parser = action_subparser.add_parser('set', 
-            description='Set hosts file', 
-            help='Set hosts file', 
+        set_parser = action_subparser.add_parser('set',
+            description='Set hosts file',
+            help='Set hosts file',
             parents=[parent_parser])
-        show_parser = action_subparser.add_parser('show', 
-            description='Show hosts file', 
-            help='Show hosts file', 
+        show_parser = action_subparser.add_parser('show',
+            description='Show hosts file',
+            help='Show hosts file',
             parents=[parent_parser])
-       
-    
+
+
         ## Setup options for create
         create_parser._positionals.title='Args'
         create_parser._optionals.title=None
         create_parser.add_argument('name', nargs=1,
                                     action='store', help = 'New hosts file name')
         create_parser.add_argument('--from', metavar='ORIGIN', nargs='?', default=None,
-                            action='store', help = 'Origin hosts file name')                    
+                            action='store', help = 'Origin hosts file name')
 
         ## Setup options for edit
         edit_parser._positionals.title='Args'
@@ -95,11 +95,11 @@ class cli(object):
         ls_parser._positionals.title='Args'
         ls_parser._optionals.title=None
 
-        self.__args = vars(main_parser.parse_args())    
+        self.__args = vars(main_parser.parse_args())
 
         if self.__args['command'] == None:
-            main_parser.print_help()    
-            raise SystemExit(0) 
+            main_parser.print_help()
+            raise SystemExit(0)
 
     def args(self):
         return self.__args

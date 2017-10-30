@@ -1,11 +1,16 @@
-import os, shutil
+"""Init."""
+import os
+import shutil
 import hostswitcher.lib
 from hostswitcher.utils.logger import logger
 import hostswitcher.utils.text as t
 
-class init(object):
 
-    def __init__(self, args):
+class init(object):
+    """Init."""
+
+    def __init__(self, args=None):
+        """Init."""
         self.args = args
         self.log = logger()
         self.sys_hosts_path = hostswitcher.lib.hosts_path()
@@ -14,9 +19,11 @@ class init(object):
         self.__print_response()
 
     def copy_current_host_file(self):
-
+        """Copy current host file."""
         def __overwrite():
-            question = '%s %s' % ('exists, do you want overwrite it?',t.underline('(yes/no)'))
+            """Private overwrite."""
+            question = '%s %s' \
+                % ('exists, do you want overwrite it?', t.underline('(yes/no)'))
             msg = '%s %s' % (t.bold(default), question)
             print(msg)
             choice = input()
@@ -42,7 +49,7 @@ class init(object):
         try:
             sys_hosts = self.sys_hosts_path
             default = self.file_name
-            hosts_filename = os.path.join(self.args['hosts_path'],default)
+            hosts_filename = os.path.join(self.args['hosts_path'], default)
 
             if os.path.exists(hosts_filename) is True:
                 while True:
@@ -72,4 +79,3 @@ class init(object):
             raise SystemExit(self.response['status'])
         else:
             print(self.response['msg'])
-            
