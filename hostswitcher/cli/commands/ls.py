@@ -28,7 +28,6 @@ class ls(object):
             system_files_to_exclude=['.DS_Store']
             for file in system_files_to_exclude:
                 if os.path.exists(os.path.join(self.args['hosts_path'], file)):
-                    print(file)
                     list_of_hostsfile.remove(file)
             if len(list_of_hostsfile) == 0:
                 print('Before list hosts file, you must run init command. \
