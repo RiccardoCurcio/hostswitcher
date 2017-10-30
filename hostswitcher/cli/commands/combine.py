@@ -1,12 +1,14 @@
-import os, shutil
-import hostswitcher.lib
+"""Combine."""
+import os
 from hostswitcher.utils.logger import logger
-from hostswitcher.utils import launch_editor
 import hostswitcher.utils.text as t
 
+
 class combine(object):
+    """Combine."""
 
     def __init__(self, args):
+        """Init."""
         self.args = args
         # self.hosts_file_suffix= 'combined'
         # self.name = '%s.%s' % (self.args['name'][0], self.hosts_file_suffix)
@@ -18,8 +20,9 @@ class combine(object):
         self.__print_response()
 
     def __combine(self):
+        """Private combine."""
         def __remove_duplicate(host_list):
-            hosts=list()
+            hosts = list()
             for host in host_list:
                 if host not in hosts:
                     hosts.append(host)
@@ -62,10 +65,10 @@ class combine(object):
                 except OSError as e:
                     self.log.error(e)
 
-        self.response= {
+        self.response = {
             "newhosts": self.name,
             "origin": self.origin,
-            "missing_origin": list() ,
+            "missing_origin": list(),
             "status": 0,
             "msg": None,
             "error": None
@@ -91,15 +94,15 @@ class combine(object):
             error = 'Not found %s\nExit'  % (t.bold(','.join(self.response['missing_origin'])))
             self.__set_response(status=-1, error=error)
             return list()
-    
+
         hostsfile_data=list()
 
-        for line in buffer:     
+        for line in buffer:
             if (not line.startswith('#')) and (not line.startswith('\n')) :
                 hostsfile_data.append(line)
 
         return hostsfile_data
-        
+
     def __set_response(self, newhosts=None, origin=None, status=0, msg=None, error=None ):
         try:
             self.response.update(
@@ -116,7 +119,7 @@ class combine(object):
         return self.response
 
     def __print_response(self):
-        if self.response['status'] != 0:            
+        if self.response['status'] != 0:
             print(self.response['error'])
             raise SystemExit(self.response['status'])
         else:
