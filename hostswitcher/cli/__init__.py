@@ -33,7 +33,7 @@ class cli(object):
             description='Combine two or more existent files',
             help='Combine two or more existent files',
             parents=[parent_parser])
-        remove_parser = action_subparser.add_parser('remove',
+        remove_parser = action_subparser.add_parser('rm',
             description='Remove hosts file',
             help='Remove hosts file',
             parents=[parent_parser])
@@ -50,8 +50,8 @@ class cli(object):
         ## Setup options for create
         create_parser._positionals.title='Args'
         create_parser._optionals.title=None
-        create_parser.add_argument('name', nargs=1,
-                                    action='store', help = 'New hosts file name')
+        create_parser.add_argument('--name', nargs=1,
+                                    action='store', help = 'New hosts file name', required=True)
         create_parser.add_argument('--from', metavar='ORIGIN', nargs='?', default=None,
                             action='store', help = 'Origin hosts file name')
 
@@ -68,10 +68,11 @@ class cli(object):
         ## Setup options for combine
         combine_parser._positionals.title='Args'
         combine_parser._optionals.title=None
+        combine_parser.add_argument('--name', nargs=1,
+                                    action='store', help = 'New hosts file name', required=True)
         combine_parser.add_argument('--from', metavar="NAME", nargs='+',
                                     action='store', help = 'Origin hosts files name', required=True)
-        combine_parser.add_argument('name', nargs=1,
-                                    action='store', help = 'New hosts file name')
+        
 
         ## Setup options for remove
         remove_parser._positionals.title='Args'
