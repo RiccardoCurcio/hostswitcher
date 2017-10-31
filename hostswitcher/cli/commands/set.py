@@ -3,7 +3,7 @@ import os
 import hostswitcher.lib
 from hostswitcher.utils.logger import logger
 import hostswitcher.utils.text as t
-
+import hostswitcher.utils.os_executor as os_executor
 
 class set(object):
     """Set class."""
@@ -11,7 +11,7 @@ class set(object):
     def __init__(self, args):
         """Init."""
         self.args = args
-        self.sys_hosts_path = hostswitcher.lib.hosts_path()
+        self.sys_hosts_path = os_executor.get_hosts_path()
         self.name = self.args['name']
         self.log = logger()
 
@@ -31,7 +31,7 @@ class set(object):
         try:
             hosts_file = os.path.join(self.args['hosts_path'], self.name)
             if os.path.exists(hosts_file):
-                hostswitcher.lib.change_hosts(hosts_file)
+                os_executor.change_hosts(hosts_file)
                 msg = '%s %s' % (t.bold(self.name), 'set!')
                 return self.__set_response(0, msg)
             else:

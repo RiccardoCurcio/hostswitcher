@@ -1,7 +1,7 @@
 """Edit."""
 import os
 from hostswitcher.utils.logger import logger
-from hostswitcher.utils import launch_editor
+from hostswitcher.utils.os_executor import launch_editor
 import hostswitcher.utils.text as t
 
 

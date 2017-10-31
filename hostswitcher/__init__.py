@@ -1,6 +1,7 @@
 from hostswitcher.cli import cli
 from hostswitcher.version import version
-from hostswitcher.utils import os_resolver
+from hostswitcher.utils.os_executor import *
+from hostswitcher.utils.os_executor import get_os
 from hostswitcher.utils.logger import logger
 from hostswitcher.utils.file import *
 
@@ -28,7 +29,7 @@ class Hostswitcher(object):
     def __print_title(self):
         print(self.title)
         print('Version: %s' % (__version__))
-        print('OS: %s\n\n' % (os_resolver()))
+        print('OS: %s\n\n' % (get_os()))
 
     def __start_cli(self):
         self.cli = cli()
@@ -38,7 +39,7 @@ class Hostswitcher(object):
 
         homedir = os.path.expanduser("~")
 
-        if os_resolver() == 'Windows':
+        if get_os() == 'Windows':
             homedir += "\\AppData\\Roaming"
 
         self.hosts_path = os.path.join(homedir, '.hostswitcher/hosts_files')

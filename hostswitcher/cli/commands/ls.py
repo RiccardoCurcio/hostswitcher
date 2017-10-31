@@ -5,7 +5,7 @@ import filecmp
 import hostswitcher.lib
 from hostswitcher.lib.table import table
 from hostswitcher.utils.logger import logger
-
+import hostswitcher.utils.os_executor as os_executor
 
 class ls(object):
     """Ls class."""
@@ -57,7 +57,7 @@ class ls(object):
             file_stat = os.stat(abspath_file)
             cmp_file = filecmp.cmp(
                 abspath_file,
-                hostswitcher.lib.hosts_path(),
+                os_executor.get_hosts_path(),
                 shallow=True
             )
             if cmp_file is True:

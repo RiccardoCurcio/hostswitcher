@@ -3,7 +3,8 @@ import os
 import shutil
 import hostswitcher.lib
 from hostswitcher.utils.logger import logger
-from hostswitcher.utils import launch_editor
+from hostswitcher.utils.os_executor import launch_editor
+from hostswitcher.utils.os_executor import get_hosts_path
 import hostswitcher.utils.text as t
 
 
@@ -90,7 +91,7 @@ class create(object):
                 error = 'Not found origin %s\nExit' % (t.bold(self.origin))
                 raise SystemExit(error)
         else:
-            origin_hosts_file = hostswitcher.lib.hosts_path()
+            origin_hosts_file = get_hosts_path()
 
         new_hosts_file = os.path.join(
             self.args['hosts_path'],

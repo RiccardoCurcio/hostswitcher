@@ -4,6 +4,7 @@ import shutil
 import hostswitcher.lib
 from hostswitcher.utils.logger import logger
 import hostswitcher.utils.text as t
+from hostswitcher.utils.os_executor import get_hosts_path
 
 
 class init(object):
@@ -13,7 +14,7 @@ class init(object):
         """Init."""
         self.args = args
         self.log = logger()
-        self.sys_hosts_path = hostswitcher.lib.hosts_path()
+        self.sys_hosts_path = get_hosts_path()
         self.file_name = 'default'
         self.copy_current_host_file()
         self.__print_response()

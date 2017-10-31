@@ -19,5 +19,11 @@ Hostswitcher is a manager for your hosts file
 pip3 install hostswitcher
 
 
+## To Work Locally
+
+requeired:
+sudo apt-get install python3-setuptools
+
+
 
 
