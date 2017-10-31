@@ -1,12 +1,14 @@
+"""Show."""
 import os
-import hostswitcher.lib
 from hostswitcher.utils.logger import logger
 import hostswitcher.utils.text as t
 
 
 class show(object):
+    """Show class."""
 
     def __init__(self, args):
+        """Init."""
         self.args = args
         self.name = self.args['name']
         self.log = logger()
@@ -15,6 +17,7 @@ class show(object):
         self.__print_response()
 
     def read_hosts_file(self):
+        """Read hosts file."""
         self.response = dict(
             {
                 "status": 0,
@@ -22,7 +25,7 @@ class show(object):
                 "error": None
             }
         )
-        
+
         try:
             with open(os.path.join(self.args['hosts_path'], self.name)) as f:
                 print('You are viewing hosts file %s' % t.bold(self.name))
@@ -31,9 +34,9 @@ class show(object):
                 f.close()
                 print('*' * 80)
                 msg = 'Enjoy hosts!'
-                self.__set_response(0,msg)
-        except OSError as e:
-            error='Can\'t read hosts file %s' % t.bold(self.name)
+                self.__set_response(0, msg)
+        except OSError:
+            error = 'Can\'t read hosts file %s' % t.bold(self.name)
             self.__set_response(-1, None, error)
 
     def __set_response(self, status=0, msg=None, error=None):

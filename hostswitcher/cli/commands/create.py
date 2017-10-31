@@ -1,12 +1,17 @@
-import os, shutil
+"""Create."""
+import os
+import shutil
 import hostswitcher.lib
 from hostswitcher.utils.logger import logger
 from hostswitcher.utils import launch_editor
 import hostswitcher.utils.text as t
 
+
 class create(object):
+    """Create class."""
 
     def __init__(self, args):
+        """Init class."""
         self.args = args
         self.name = self.args['name'][0]
         self.log = logger()
@@ -16,27 +21,35 @@ class create(object):
         self.__print_response()
 
     def create_new_file(self):
+        """Create new file."""
         self.response = dict(
             {
                 "newhosts": None,
                 "origin": self.origin,
-                "status": 0,    
+                "status": 0,
                 "msg": None,
                 "error": None
             }
         )
         try:
-            copy_result = self.__copy_hosts_file()
-            hosts_file = os.path.join(self.args['hosts_path'],self.name)
+            self.__copy_hosts_file()
+            hosts_file = os.path.join(
+                self.args['hosts_path'],
+                self.name
+            )
             launch_editor(hosts_file)
         except Exception as e:
             self.log.warning(e)
-            error = '%s %s' % (t.bold(self.name),'not created!')
-            return self.__set_response(status=-1,  error=error)
+            error = '%s %s' % (t.bold(self.name), 'not created!')
+            return self.__set_response(status=-1, error=error)
 
     def __copy_hosts_file(self):
+        """Private copy hosts file."""
         def __overwrite():
-            qmsg = '%s %s' % ('exists, do you want overwrite it?',t.underline('(yes/no)'))
+            qmsg = '%s %s' % (
+                'exists, do you want overwrite it?',
+                t.underline('(yes/no)')
+            )
             msg = '%s %s' % (t.bold(self.name), qmsg)
             print(msg)
             resp = input()
@@ -45,10 +58,21 @@ class create(object):
                     shutil.copyfile(origin_hosts_file, new_hosts_file)
                     self.__set_title(new_hosts_file)
                     msg = '%s %s' % (t.bold(self.name), 'overwrited!')
-                    self.__set_response(new_hosts_file, origin_hosts_file, msg=msg)
-                except Exception as e:
-                    msg = '%s %s' % (t.bold(self.name), 'not overwrited!')
-                    self.__set_response(new_hosts_file, origin_hosts_file, msg=msg)
+                    self.__set_response(
+                        new_hosts_file,
+                        origin_hosts_file,
+                        msg=msg
+                    )
+                except Exception:
+                    msg = '%s %s' % (
+                        t.bold(self.name),
+                        'not overwrited!'
+                    )
+                    self.__set_response(
+                        new_hosts_file,
+                        origin_hosts_file,
+                        msg=msg
+                    )
             elif str(resp).lower() == 'no':
                 msg = '%s %s' % (t.bold(self.name), 'not overwrited!')
                 self.__set_response(new_hosts_file, origin_hosts_file, msg=msg)
@@ -56,16 +80,22 @@ class create(object):
             else:
                 print('Invalid choice. Retry')
                 __overwrite()
-                
-        if self.origin != None:
-            origin_hosts_file = os.path.join(self.args['hosts_path'],self.origin)
+
+        if self.origin is not None:
+            origin_hosts_file = os.path.join(
+                self.args['hosts_path'],
+                self.origin
+            )
             if not os.path.exists(origin_hosts_file):
                 error = 'Not found origin %s\nExit' % (t.bold(self.origin))
                 raise SystemExit(error)
         else:
             origin_hosts_file = hostswitcher.lib.hosts_path()
-        
-        new_hosts_file = os.path.join(self.args['hosts_path'],self.args['name'][0])
+
+        new_hosts_file = os.path.join(
+            self.args['hosts_path'],
+            self.args['name'][0]
+        )
 
         try:
             if os.path.exists(new_hosts_file) is True:
@@ -78,10 +108,17 @@ class create(object):
                 msg = '%s %s' % (t.bold(self.name), 'created!')
                 self.__set_title(new_hosts_file)
                 self.__set_response(new_hosts_file, origin_hosts_file, msg=msg)
-        except Exception as e:
-            # self.log.warning(e)
-            error = '%s %s' % (t.bold(self.name), 'not created!')
-            self.__set_response(new_hosts_file, origin_hosts_file, -1, error=error)
+        except Exception:
+            error = '%s %s' % (
+                t.bold(self.name),
+                'not created!'
+            )
+            self.__set_response(
+                new_hosts_file,
+                origin_hosts_file,
+                -1,
+                error=error
+            )
 
     def __set_title(self, hosts_file):
 
@@ -95,8 +132,8 @@ class create(object):
                 hosts_file_lines.pop(0)
         except OSError as e:
             self.log.error(e)
-        
-        hosts_file_data = ['#HOSTSWITCHER name: %s\n' % name ]
+
+        hosts_file_data = ['#HOSTSWITCHER name: %s\n' % name]
         hosts_file_data.extend(hosts_file_lines)
 
         try:
@@ -105,8 +142,7 @@ class create(object):
         except OSError as e:
             self.log.error(e)
 
-
-    def __set_response(self, newhosts=None, origin=None, status=0, msg=None, error=None ):
+    def __set_response(self, newhosts=None, origin=None, status=0, msg=None, error=None):
         try:
             self.response.update(
                 {

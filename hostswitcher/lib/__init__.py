@@ -1,5 +1,6 @@
-import os, subprocess
-
+"""Init lib."""
+import os
+import subprocess
 from hostswitcher.utils import *
 from hostswitcher.utils.logger import logger
 

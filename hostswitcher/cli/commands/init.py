@@ -22,8 +22,10 @@ class init(object):
         """Copy current host file."""
         def __overwrite():
             """Private overwrite."""
-            question = '%s %s' \
-                % ('exists, do you want overwrite it?', t.underline('(yes/no)'))
+            question = '%s %s' % (
+                'exists, do you want overwrite it?',
+                t.underline('(yes/no)')
+            )
             msg = '%s %s' % (t.bold(default), question)
             print(msg)
             choice = input()

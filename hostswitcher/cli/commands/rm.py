@@ -1,22 +1,31 @@
-import os, filecmp
+"""Rm."""
+import os
+import filecmp
 import hostswitcher.lib
 from hostswitcher.utils.logger import logger
 import hostswitcher.utils.text as t
 
+
 class rm(object):
+    """Rm class."""
 
     def __init__(self, args):
+        """Init."""
         self.args = args
         self.name = self.args['name'][0]
         self.log = logger()
-
         self.__remove_hosts_file()
         self.__print_response()
 
     def __remove_hosts_file(self):
 
         def __ask_remove():
-            question = '%s %s%s%s'  % ('Do you want remove',t.bold(self.name),'?',t.underline('(yes/no)'))
+            question = '%s %s%s%s' % (
+                'Do you want remove',
+                t.bold(self.name),
+                '?',
+                t.underline('(yes/no)')
+            )
             print(question)
             choice = input()
             if str(choice).lower() == 'yes':
@@ -24,10 +33,10 @@ class rm(object):
                     os.remove(hosts_file)
                     msg = '%s %s' % (t.bold(self.name), 'removed!')
                     return self.__set_response(0, msg)
-                except Exception as e:
+                except Exception:
                     error = '%s %s' % (t.bold(self.name), 'not removed!')
                     return self.__set_response(-1, error=error)
-                
+
             elif str(choice).lower() == 'no':
                 error = '%s %s' % (t.bold(self.name), 'not removed!')
                 return self.__set_response(-1, error=error)
@@ -43,19 +52,28 @@ class rm(object):
 
         hosts_file = os.path.join(self.args['hosts_path'], self.name)
         if os.path.exists(hosts_file):
-            if filecmp.cmp(hosts_file, hostswitcher.lib.hosts_path(), shallow=True) is False:
+            cpm_file = filecmp.cmp(
+                hosts_file,
+                hostswitcher.lib.hosts_path(),
+                shallow=True
+            )
+            if cpm_file is False:
                 try:
                     __ask_remove()
                 except Exception as e:
                     self.log.error(e)
             else:
-                error = 'You can\'t remove %s. Hosts file in use' % t.bold(self.name)
+                error = 'You can\'t remove %s. Hosts file in use' % (
+                    t.bold(self.name)
+                )
                 self.__set_response(-1, error=error)
         else:
-            error = 'Nothing to remove. File %s not exists' % t.bold(self.name)
+            error = 'Nothing to remove. File %s not exists' % (
+                t.bold(self.name)
+            )
             self.__set_response(-1, error=error)
 
-    def __set_response(self, status=0, msg=None, error=None ):
+    def __set_response(self, status=0, msg=None, error=None):
         try:
             self.response.update(
                 {

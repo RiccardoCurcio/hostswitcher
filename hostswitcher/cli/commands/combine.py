@@ -10,8 +10,6 @@ class combine(object):
     def __init__(self, args):
         """Init."""
         self.args = args
-        # self.hosts_file_suffix= 'combined'
-        # self.name = '%s.%s' % (self.args['name'][0], self.hosts_file_suffix)
         self.name = self.args['name'][0]
         self.origin = self.args['from']
         self.log = logger()
@@ -30,19 +28,25 @@ class combine(object):
 
         def __write():
             def __overwrite():
-                qmsg = '%s %s' % ('exists, do you want overwrite it?',t.underline('(yes/no)'))
+                qmsg = '%s %s' % (
+                    'exists, do you want overwrite it?',
+                    t.underline('(yes/no)')
+                )
                 msg = '%s %s' % (t.bold(self.name), qmsg)
                 print(msg)
                 resp = input()
                 if str(resp).lower() == 'yes':
                     try:
                         with open(new_hosts_file, 'w') as f:
-                            f.write('#HOSTSWITCHER combined from: %s\n' % ','.join(self.origin))
+                            f.write('#HOSTSWITCHER combined from: %s\n' % (
+                                ','.join(self.origin)
+                                )
+                            )
                             f.writelines(hosts)
                             f.close()
                             msg = '%s %s' % (t.bold(self.name), 'writed!')
                         self.__set_response(status=0, msg=msg)
-                    except Exception as e:
+                    except Exception:
                         error = '%s %s' % (t.bold(self.name), 'not writed!')
                         self.__set_response(status=0, error=error)
                 elif str(resp).lower() == 'no':
@@ -57,7 +61,10 @@ class combine(object):
             else:
                 try:
                     with open(new_hosts_file, 'w') as f:
-                        f.write('#HOSTSWITCHER combined from: %s\n' % ','.join(self.origin))
+                        f.write('#HOSTSWITCHER combined from: %s\n' % (
+                            ','.join(self.origin)
+                            )
+                        )
                         f.writelines(hosts)
                         f.close()
                     msg = '%s %s' % (t.bold(self.name), 'writed!')
@@ -92,7 +99,11 @@ class combine(object):
                 f.close()
         except Exception:
             self.response['missing_origin'].append(hostsfile)
-            error = 'Not found %s\nExit'  % (t.bold(','.join(self.response['missing_origin'])))
+            error = 'Not found %s\nExit' % (
+                t.bold(
+                    ','.join(self.response['missing_origin'])
+                )
+            )
             self.__set_response(status=-1, error=error)
             return list()
 

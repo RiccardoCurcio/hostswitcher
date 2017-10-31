@@ -1,12 +1,15 @@
-import os, shutil
-import hostswitcher.lib
+"""Edit."""
+import os
 from hostswitcher.utils.logger import logger
 from hostswitcher.utils import launch_editor
 import hostswitcher.utils.text as t
 
+
 class edit(object):
+    """Edit class."""
 
     def __init__(self, args):
+        """Init."""
         self.args = args
         self.name = self.args['name']
         self.log = logger()
@@ -18,13 +21,16 @@ class edit(object):
         self.response = dict(
             {
                 "hostsfile": self.name,
-                "status": 0,    
+                "status": 0,
                 "msg": None,
                 "error": None
             }
         )
         try:
-            hosts_file = os.path.join(self.args['hosts_path'],self.name)
+            hosts_file = os.path.join(
+                self.args['hosts_path'],
+                self.name
+            )
             if os.path.exists(hosts_file):
                 launch_editor(hosts_file)
                 msg = 'Edit complete for %s!' % t.bold(self.name)
@@ -34,10 +40,14 @@ class edit(object):
                 return self.__set_response(-1, error=error)
         except Exception as e:
             self.log.warning(e)
-            error = '%s %s' % ('Can\'t open file',t.bold(self.name))
+            error = '%s %s' % (
+                'Can\'t open file',
+                t.bold(self.name)
+            )
             return self.__set_response(status=-1,  error=error)
 
-    def __set_response(self, status=0, msg=None, error=None ):
+    def __set_response(self, status=0, msg=None, error=None):
+        """Private set response."""
         try:
             self.response.update(
                 {

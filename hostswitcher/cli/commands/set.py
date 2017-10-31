@@ -1,3 +1,4 @@
+"""Set."""
 import os
 import hostswitcher.lib
 from hostswitcher.utils.logger import logger
@@ -5,8 +6,10 @@ import hostswitcher.utils.text as t
 
 
 class set(object):
+    """Set class."""
 
     def __init__(self, args):
+        """Init."""
         self.args = args
         self.sys_hosts_path = hostswitcher.lib.hosts_path()
         self.name = self.args['name']
@@ -33,14 +36,12 @@ class set(object):
                 return self.__set_response(0, msg)
             else:
                 error = '%s %s' % (t.bold(self.name), 'not exists!')
-                # self.log.warning(error)
                 return self.__set_response(-1,  error=error)
-        except Exception as e:
-            # self.log.warning(e)
+        except Exception:
             error = '%s %s' % (t.bold(self.name), 'not set!')
             return self.__set_response(-1,  error=error)
 
-    def __set_response(self, status=0, msg=None, error=None ):
+    def __set_response(self, status=0, msg=None, error=None):
         try:
             self.response.update(
                 {
